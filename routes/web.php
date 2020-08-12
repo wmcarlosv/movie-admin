@@ -23,6 +23,8 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
 
 	Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 	Route::get('/importMovies','HomeController@importMovies')->name('import_movies');
+	Route::post('/importMovies','HomeController@setImportMovies')->name('set_import_movies');
+	Route::post('/saveMovies','HomeController@saveMovies')->name('save_movies');
 
 	Route::resource('users','UsersController');
 	Route::get('/profile','UsersController@profile')->name('profile');

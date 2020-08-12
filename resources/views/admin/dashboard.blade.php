@@ -13,7 +13,7 @@
 		    	<span class="info-box-icon bg-red"><i class="fas fa-tags"></i></span>
 		    	<div class="info-box-content">
 		    		<span class="info-box-text">Categories</span>
-		    		<span class="info-box-number">0</span>
+		    		<span class="info-box-number">{{ $ccat }}</span>
 		    	</div>
 		    </div>
 		</div>
@@ -22,7 +22,7 @@
 		    	<span class="info-box-icon bg-blue"><i class="fas fa-ticket-alt"></i></span>
 		    	<div class="info-box-content">
 		    		<span class="info-box-text">Movies</span>
-		    		<span class="info-box-number">0</span>
+		    		<span class="info-box-number">{{ $cmov }}</span>
 		    	</div>
 		    </div>
 		</div>

@@ -11,7 +11,7 @@
 		<div class="col-md-12">
 			<div class="card card-success">
 				<div class="card-header">
-					<h3><i class="fas fa-users"></i> {{ $title }}</h3>
+					<h3><i class="fas fa-ticket-alt"></i> {{ $title }}</h3>
 				</div>
 				<div class="card-body">
 					<a href="{{ route('movies.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> New Movie</a>
@@ -23,6 +23,7 @@
 							<th>Title</th>
 							<th>Poster</th>
 							<th>Categories</th>
+							<th>Year</th>
 							<th>Views</th>
 							<th>Downloads</th>
 							<th>Status</th>
@@ -32,7 +33,7 @@
 							@foreach($data as $movie)
 								<tr>
 									<td>{{ $movie->id }}</td>
-									<td>{{ $movie->title }}</td>
+									<td width="300">{{ $movie->title }}</td>
 									<td>
 										@if(isset($movie->poster))
 											<img src="{{ asset('storage/movies/'.$movie->poster) }}" class="img-thumbnail" style="width: 150px; height: 150px;" />
@@ -40,11 +41,12 @@
 											<span class="badge badge-info">Not Image</span>
 										@endif
 									</td>
-									<td>
+									<td width="200">
 										@foreach($movie->categories as $category)
 											<span class="badge badge-info">{{ $category->name }}</span>
 										@endforeach
 									</td>
+									<td>{{ $movie->year }}</td>
 									<td>{{ $movie->views }}</td>
 									<td>{{ $movie->downloads }}</td>
 									<td>
