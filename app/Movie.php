@@ -11,6 +11,6 @@ class Movie extends Model
     protected $fillable = ['title','description','year','poster','api_code','views','downloads','status'];
 
     public function categories(){
-    	return $this->belongsToMany('App\Category','movie_categories');
+    	return $this->belongsToMany('App\Category','movie_categories')->withTimestamps();
     }
 }

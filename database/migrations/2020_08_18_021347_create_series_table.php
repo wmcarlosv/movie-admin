@@ -18,7 +18,7 @@ class CreateSeriesTable extends Migration
             $table->string('title',150)->nullable(false);
             $table->text('description')->nullable(false);
             $table->year('year')->nullable(false);
-            $table->string('poster',100)->nullable(false);
+            $table->string('poster',100)->nullable();
             $table->timestamps();
         });
     }

@@ -11,39 +11,37 @@
 		<div class="col-md-12">
 			<div class="card card-success">
 				<div class="card-header">
-					<h3><i class="fas fa-users"></i> {{ $title }}</h3>
+					<h3><i class="fas fa-tags"></i> {{ $title }}</h3>
 				</div>
 				<div class="card-body">
-					<a href="{{ route('users.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> New User</a>
+					<a href="{{ route('series.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> New Serie</a>
 					<br />
 					<br />
 					<table class="table table-bordered table-striped">
 						<thead>
 							<th>ID</th>
-							<th>Name</th>
-							<th>Email</th>
-							<th>Role</th>
-							<th>Status</th>
+							<th>Title</th>
+							<th>Year</th>
+							<th>Poster</th>
 							<th>-</th>
 						</thead>
 						<tbody>
-							@foreach($data as $user)
+							@foreach($data as $serie)
 								<tr>
-									<td>{{ $user->id }}</td>
-									<td>{{ $user->name }}</td>
-									<td>{{ $user->email }}</td>
-									<td>{{ $user->role }}</td>
+									<td>{{ $serie->id }}</td>
+									<td>{{ $serie->title }}</td>
+									<td>{{ $serie->year }}</td>
 									<td>
-										@if($user->status == 'A')
-											<span class="badge badge-success">Active</span>
+										@if(!empty($serie->poster))
+											<img class="img-thumbnail" src="{{ asset('storage/series/'.$serie->poster) }}" style="width: 150px; height: 150px;"></img>
 										@else
-											<span class="badge badge-danger">Inactive</span>
+											<span class="badge badge-warning">Not Poster</span>
 										@endif
 									</td>
 									<td>
-										<a href="{{ route('users.edit',[$user->id]) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>
-										{!! Form::open(['route' => ['users.destroy',$user->id], 'method' => 'DELETE', 'style' => 'display:inline;', 'id' => 'delete_'.$user->id]) !!}
-											<button data-id="{{ $user->id }}" class="delete btn @if($user->status == 'A') btn-danger @else btn-success @endif" type="button">@if($user->status == 'A') <i class="fas fa-times"></i> @else <i class="fas fa-plus"></i> @endif</button>
+										<a href="{{ route('series.edit',[$serie->id]) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>
+										{!! Form::open(['route' => ['series.destroy',$serie->id], 'method' => 'DELETE', 'style' => 'display:inline;', 'id' => 'delete_'.$serie->id]) !!}
+											<button data-id="{{ $serie->id }}" class="delete btn btn-danger" type="button"><i class="fas fa-times"></i></button>
 										{!! Form::close() !!}
 									</td>
 								</tr>
