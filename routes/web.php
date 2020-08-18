@@ -26,6 +26,8 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
 	Route::post('/importMovies','HomeController@setImportMovies')->name('set_import_movies');
 	Route::post('/saveMovies','HomeController@saveMovies')->name('save_movies');
 
+	Route::get('/importSeries','HomeController@importSeries')->name('import_series');
+
 	Route::resource('users','UsersController');
 	Route::get('/profile','UsersController@profile')->name('profile');
 	Route::post('/update_profile','UsersController@update_profile')->name('update_profile');
@@ -33,4 +35,8 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
 
 	Route::resource('categories','CategoriesController');
 	Route::resource('movies','MoviesController');
+
+	Route::resource('series','SeriesController');
+	Route::resource('seasons','SeasonsController');
+	Route::resource('chapters','ChaptersController');
 });

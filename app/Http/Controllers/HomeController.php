@@ -227,4 +227,10 @@ class HomeController extends Controller
 
         return $category_id;
     }
+
+    public function importSeries(){
+        $title = "Import Series";
+
+        return view('admin.imports.series')->with(compact('title'));
+    }
 }

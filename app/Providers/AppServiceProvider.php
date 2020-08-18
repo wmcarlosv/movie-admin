@@ -50,13 +50,44 @@ class AppServiceProvider extends ServiceProvider
                     'icon' => 'fas fa-tags',
                     'route' => 'categories.index'
                 ],[
-                    'text' => 'Movies',
-                    'icon' => 'fas fa-ticket-alt',
-                    'route' => 'movies.index'
+                    'text' => 'Movies Manager',
+                    'icon' => 'fas fa-list',
+                    'submenu' => [
+                        [
+                            'text' => 'Movies',
+                            'icon' => 'fas fa-ticket-alt',
+                            'route' => 'movies.index'
+                        ],[
+                            'text' => 'Import Movies',
+                            'icon' => 'fas fa-file-import',
+                            'route' => 'import_movies'
+                        ]
+                    ]
                 ],[
-                    'text' => 'Import Movies',
-                    'icon' => 'fas fa-file-import',
-                    'route' => 'import_movies'
+                    'text' => 'Series Manager',
+                    'icon' => 'fas fa-list',
+                    'submenu' => [
+                        [
+                            'text' => 'Series',
+                            'route' => 'series.index',
+                            'icon' => 'fas fa-tv'
+                        ],
+                        [
+                            'text' => 'Seasons',
+                            'route' => 'seasons.index',
+                            'icon' => 'fas fa-play'
+                        ],
+                        [
+                            'text' => 'Chapters',
+                            'route' => 'chapters.index',
+                            'icon' => 'fas fa-video'
+                        ],
+                        [
+                            'text' => 'Import Series',
+                            'route' => 'import_series',
+                            'icon' => 'fas fa-file-import'
+                        ]
+                    ]
                 ]);
 
             }
