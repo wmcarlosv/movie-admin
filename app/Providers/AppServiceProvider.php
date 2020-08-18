@@ -50,7 +50,7 @@ class AppServiceProvider extends ServiceProvider
                     'icon' => 'fas fa-tags',
                     'route' => 'categories.index'
                 ],[
-                    'text' => 'Movies Manager',
+                    'text' => 'Movies Manage',
                     'icon' => 'fas fa-list',
                     'submenu' => [
                         [
@@ -64,7 +64,7 @@ class AppServiceProvider extends ServiceProvider
                         ]
                     ]
                 ],[
-                    'text' => 'Series Manager',
+                    'text' => 'Series Manage',
                     'icon' => 'fas fa-list',
                     'submenu' => [
                         [

@@ -9,6 +9,7 @@ use App\Movie;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Session;
+use App\Serie;
 
 class HomeController extends Controller
 {
@@ -32,8 +33,9 @@ class HomeController extends Controller
     {
         $categories = Category::all();
         $movies = Movie::all();
+        $series = Serie::all();
 
-        return view('admin.dashboard',['ccat'=>$categories->count(), 'cmov' => $movies->count()]);
+        return view('admin.dashboard',['ccat'=>$categories->count(), 'cmov' => $movies->count(), 'cser' => $series->count()]);
     }
 
     public function importMovies(){

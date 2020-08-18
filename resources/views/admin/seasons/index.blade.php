@@ -11,37 +11,31 @@
 		<div class="col-md-12">
 			<div class="card card-success">
 				<div class="card-header">
-					<h3><i class="fas fa-tv"></i> {{ $title }}</h3>
+					<h3><i class="fas fa-play"></i> {{ $title }}</h3>
 				</div>
 				<div class="card-body">
-					<a href="{{ route('series.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> New Serie</a>
+					<a href="{{ route('seasons.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> New Season</a>
 					<br />
 					<br />
 					<table class="table table-bordered table-striped">
 						<thead>
 							<th>ID</th>
+							<th>Serie</th>
 							<th>Title</th>
-							<th>Year</th>
-							<th>Poster</th>
+							<th>Position</th>
 							<th>-</th>
 						</thead>
 						<tbody>
-							@foreach($data as $serie)
+							@foreach($data as $season)
 								<tr>
-									<td>{{ $serie->id }}</td>
-									<td>{{ $serie->title }}</td>
-									<td>{{ $serie->year }}</td>
+									<td>{{ $season->id }}</td>
+									<td>{{ $season->serie->title }}</td>
+									<td>{{ $season->title }}</td>
+									<td>{{ $season->position }}</td>
 									<td>
-										@if(!empty($serie->poster))
-											<img class="img-thumbnail" src="{{ asset('storage/series/'.$serie->poster) }}" style="width: 150px; height: 150px;"></img>
-										@else
-											<span class="badge badge-warning">Not Poster</span>
-										@endif
-									</td>
-									<td>
-										<a href="{{ route('series.edit',[$serie->id]) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>
-										{!! Form::open(['route' => ['series.destroy',$serie->id], 'method' => 'DELETE', 'style' => 'display:inline;', 'id' => 'delete_'.$serie->id]) !!}
-											<button data-id="{{ $serie->id }}" class="delete btn btn-danger" type="button"><i class="fas fa-times"></i></button>
+										<a href="{{ route('seasons.edit',[$season->id]) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>
+										{!! Form::open(['route' => ['seasons.destroy',$season->id], 'method' => 'DELETE', 'style' => 'display:inline;', 'id' => 'delete_'.$season->id]) !!}
+											<button data-id="{{ $season->id }}" class="delete btn btn-danger" type="button"><i class="fas fa-times"></i></button>
 										{!! Form::close() !!}
 									</td>
 								</tr>

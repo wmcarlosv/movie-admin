@@ -8,7 +8,7 @@
 
 @section('content')
    	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<div class="info-box">
 		    	<span class="info-box-icon bg-red"><i class="fas fa-tags"></i></span>
 		    	<div class="info-box-content">
@@ -17,7 +17,7 @@
 		    	</div>
 		    </div>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<div class="info-box">
 		    	<span class="info-box-icon bg-blue"><i class="fas fa-ticket-alt"></i></span>
 		    	<div class="info-box-content">
@@ -26,19 +26,27 @@
 		    	</div>
 		    </div>
 		</div>
+		<div class="col-md-4">
+			<div class="info-box">
+		    	<span class="info-box-icon bg-green"><i class="fas fa-tv"></i></span>
+		    	<div class="info-box-content">
+		    		<span class="info-box-text">Series</span>
+		    		<span class="info-box-number">{{ $cser }}</span>
+		    	</div>
+		    </div>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-6">
 			<div class="card card-info">
 				<div class="card-header">
-					<h3><i class="fas fa-eye"></i> Most Views</h3>
+					<h3><i class="fas fa-ticket-alt"></i> Movie Most Views</h3>
 				</div>
 				<div class="card-body">
 					<table class="table table-bordered table-striped">
 						<thead>
 							<th>ID</th>
 							<th>Title</th>
-							<th>Photo</th>
 							<th>Views</th>
 						</thead>
 						<tbody>
@@ -51,14 +59,13 @@
 		<div class="col-md-6">
 			<div class="card card-success">
 				<div class="card-header">
-					<h3><i class="fas fa-download"></i> Most Downloads</h3>
+					<h3><i class="fas fa-tv"></i> Serie Most Views</h3>
 				</div>
 				<div class="card-body">
 					<table class="table table-bordered table-striped">
 						<thead>
 							<th>ID</th>
 							<th>Title</th>
-							<th>Photo</th>
 							<th>Views</th>
 						</thead>
 						<tbody>
