@@ -169,7 +169,7 @@ class SeriesController extends Controller
     public function destroy($id)
     {
         $serie = Serie::findorfail($id); 
-
+        Storage::delete('public/series/'.$serie->poster);
         if($serie->delete()){
             Session::flash('success','Record Deleted Successfully!!');
         }else{

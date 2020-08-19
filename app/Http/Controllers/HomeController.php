@@ -10,10 +10,16 @@ use DB;
 use Illuminate\Support\Facades\Storage;
 use Session;
 use App\Serie;
+use App\Season;
+use App\Chapter;
 
 class HomeController extends Controller
 {
     private $movieData = Array();
+    private $categories = Array();
+    private $seasons = Array();
+    private $chapters = Array();
+    private $crawler;
     /**
      * Create a new controller instance.
      *
@@ -234,5 +240,194 @@ class HomeController extends Controller
         $title = "Import Series";
 
         return view('admin.imports.series')->with(compact('title'));
+    }
+
+    public function setImportSeries(Request $request){
+        $request->validate([
+            'url' => 'required'
+        ]);
+
+        $title = "Import Series";
+        $url = $request->input('url');
+
+        $data = (object) $this->getIndividualSerie($url);
+        
+        return view('admin.imports.series')->with(compact('title','data','url'));
+    }
+
+    public function getIndividualSerie($url){
+
+        $categories = "";
+        $serieData = Array();
+
+        $client = new Client(); 
+        $this->crawler = $client->request('GET', $url);
+
+        $title = $this->crawler->filter('div.card h1.m-b-5')->text();
+        $description = $this->crawler->filter('div.card div.text-large')->text();
+        $poster = $this->crawler->filter('div.card img')->attr('src');
+        $year = $this->crawler->filter('div.card span.text-semibold')->text();
+
+        $this->crawler->filter('div.card a[href^="/generos/"]')->each(function($node){
+            array_push($this->categories, $node->text());
+        });
+
+        $this->crawler->filter('div.card ul li.presentation a')->each(function($node){
+
+           $this->crawler->filter($node->attr('href').' a')->each(function($node){
+                array_push($this->chapters, ['title' => $node->text(), 'data' => $this->getDataSerie($node->attr('href'))]);
+            });
+
+            array_push($this->seasons, ['title' => $node->text(), 'chapters' => $this->chapters]);
+
+            $this->chapters = [];
+        });
+
+
+        $serieData['title'] = $title;
+        $serieData['description'] = $description;
+        $serieData['poster'] = $poster;
+        $serieData['year'] = $year;
+        $serieData['categories'] = $this->categories;
+        $serieData['seasons'] = $this->seasons;
+
+        return $serieData;
+    }
+
+    public function getDataSerie($url){
+
+        $serieData = Array();
+
+        $client = new Client(); 
+        $crawler = $client->request('GET', $url);
+
+        $title = $crawler->filter('div.card h1.m-b-5')->text();
+
+        $crawler->selectLink('PlusTo');
+
+        $api_code = $crawler->filter('script')->eq(2)->text();
+        if(empty($api_code)){
+            $api_code = $crawler->filter('script')->eq(3)->text();
+        }
+
+        $urlApiCode = $crawler->filter('div.video-html > iframe')->attr('src');
+
+        $serieData['title'] = $title;
+        $serieData['api_code'] = $this->getApiCodeSerie($api_code);
+
+        return $serieData;
+    }
+
+    public function getApiCodeSerie($text){
+        $result = "Not Api Code";
+        $equals = explode("=", $text);
+
+        if(count($equals) >= 3){
+            $puntoycoma = explode(";", $equals[3]);
+            if(count($puntoycoma) > 0){
+                $coma = explode("'", $puntoycoma[0]);
+                if(count($coma) > 0){
+                    $result = $this->getApiCode($coma[1]);
+                }
+            }
+            
+        }
+
+        return $result;
+    }
+
+    public function saveSeries(Request $request){
+
+        $errors = 0;
+
+        DB::beginTransaction();
+
+        $serie = Serie::where(DB::raw("UPPER(title)"),'=',strtoupper($request->input('title')))->get();
+
+        if($serie->count() > 0){
+            $serie = Serie::findorfail($serie[0]->id);
+        }else{
+           $serie = new Serie();
+        }
+
+        $serie->title = $request->input('title');
+        $serie->description = $request->input('description');
+        $serie->year = $request->input('year');
+
+        $imgUrl = $poster = $request->input('poster');
+        $imgExtension = pathinfo(parse_url($imgUrl, PHP_URL_PATH), PATHINFO_EXTENSION);
+        $imgName = preg_replace("/[^a-zA-Z]/", "", str_replace(" ", "_", $request->input('title')));
+        $imgContents = file_get_contents($imgUrl);
+        Storage::put('public/series/'.$imgName.".".$imgExtension, $imgContents);
+
+        $serie->poster = $imgName.".".$imgExtension;
+
+        if($serie->save()){
+            $serie->categories()->detach();
+
+            foreach($request->input('categories') as $category){
+                $serie->categories()->attach($this->getCategory($category));
+            }
+
+            $season_titles = $request->input('season_title');
+            $season_positions = $request->input('season_position');
+
+            foreach($season_titles as $key => $sas){
+
+                $season = Season::where([
+                    [DB::raw('UPPER(title)'),'=',$sas],
+                    ['serie_id','=',$serie->id]
+                ])->get();
+
+                if($season->count() > 0){
+                    $season = Season::findorfail($season[0]->id);
+                }else{
+                    $season = new Season(); 
+                }
+                    
+                $season->title = $sas;
+                $season->position = $season_positions[$key];
+                $season->serie_id = $serie->id;
+
+                if($season->save()){
+                    $chapter_titles = $request->input('chapter_title_'.$key);
+                    $chapter_position = $request->input('chapter_position_'.$key);
+                    $chapter_api_code = $request->input('chapter_api_code_'.$key);
+
+                    foreach($chapter_titles as $k => $cht){
+                        $chapter = Chapter::where(DB::raw('UPPER(title)'),strtoupper($cht))->where('season_id',$season->id)->get();
+                        
+                        if($chapter->count() > 0){
+                            $chapter = Chapter::findorfail($chapter[0]->id);
+                        }else{
+                            $chapter = new Chapter();  
+                        }
+                            
+                        $chapter->title = $cht;
+                        $chapter->position = $chapter_position[$k];
+                        $chapter->api_code = $chapter_api_code[$k];
+                        $chapter->season_id = $season->id;
+
+                        if(!$chapter->save()){
+                            $errors++;
+                        }
+                    }
+                }else{
+                    $errors++;
+                }
+            }
+        }else{
+            $errors++;
+        }
+
+        if($errors > 0){
+            DB::rollback();
+            Session::flash('error','Error Importing Serie!!');
+        }else{
+            Session::flash('success','Serie Imported Successfully!!!');
+            DB::commit();
+        }
+
+        return redirect()->route('import_series');
     }
 }

@@ -19,7 +19,7 @@ class CreateSerieCategoriesTable extends Migration
             $table->unsignedBigInteger('category_id');
             $table->timestamps();
 
-            $table->foreign('serie_id')->references('id')->on('series')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreign('serie_id')->references('id')->on('series')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('restrict');
         });
     }
