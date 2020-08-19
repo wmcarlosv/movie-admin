@@ -62,12 +62,43 @@
 					</div>
 				</div>
 				<div class="card-footer text-right">
+					@if($type == 'edit')
+					<a class="btn btn-info test-movie" href="#" data-code="{{ @$data->api_code }}"><i class="fas fa-eye"></i></a>
+					@endif
 					<button class="btn btn-success" type="submit"><i class="fas fa-save"></i> Save</button>
 					<a href="{{ route('movies.index') }}" class="btn btn-danger"><i class="fas fa-times"></i> Cancel</a>
 				</div>
 			{!! Form::close() !!}
 		</div>
 	</div>
+</div>
+<!-- The Modal -->
+<div class="modal" id="movie-view-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">View Movie In Player</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+      	<h3>Quality</h3>
+      	<hr />
+        <center><div class="btn-group" id="qlf"></div></center>
+        <hr />
+        <div id="player"></div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" id="close-modal" class="btn btn-danger">Close</button>
+      </div>
+
+    </div>
+  </div>
 </div>
 @stop
 @section('plugins.Select2', true)
@@ -79,6 +110,41 @@
 		@if($type == 'edit')
 			$("select.select-multiple").val([@foreach($data->categories as $category)'{{ $category->id }}',@endforeach]).trigger('change');
 		@endif
+
+		$(".test-movie").click(function(){
+			let api_code = $(this).attr('data-code');
+
+			$.ajax({
+			    url: 'https://feurl.com/api/source/'+api_code,
+			    data: {},
+			    type: 'POST',
+			    crossDomain: true,
+			    success: function(data) { 
+			    	let files = data.data;
+			    	let html = "";
+			    	$("#qlf").empty();
+			    	$.each(files, function(index, value){
+			    		html+="<button class='btn btn-info set-player' data-url='"+value.file+"' type='button'>"+value.label+"</button>";
+			    	});
+			    	$("#qlf").html(html);
+			    	html = "";
+			    },
+			    error: function(data) { console.log(data); }
+			});
+
+			$('#movie-view-modal').modal('show');
+		});
+
+		$("body").on('click','button.set-player', function(){
+			let url_player = $(this).attr("data-url");
+			$("#player").empty();
+			$("#player").html("<video width='100%' height='240' controls><source src='"+url_player+"' type='video/mp4'/></video>");
+		});
+
+		$("#close-modal").click(function(){
+			$("#player").empty();
+			$('#movie-view-modal').modal('hide');
+		});
 	});
 	
 </script>
