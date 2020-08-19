@@ -15,6 +15,6 @@ class Season extends Model
     }
 
     public function chapters(){
-    	return $this->belongsToMany('App\Chapter');
+    	return $this->hasMany('App\Chapter');
     }
 }
