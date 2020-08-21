@@ -443,4 +443,11 @@ class HomeController extends Controller
 
         return response()->json($remote_server_output);
     }
+
+    public function getVideo(Request $request){
+
+        $video_url = $request->input('video_url');
+
+        print "<video width='100%' height='240' controls><source src='".$video_url."' type='video/mp4'/></video>";
+    }
 }
