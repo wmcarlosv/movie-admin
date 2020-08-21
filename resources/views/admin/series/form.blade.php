@@ -145,8 +145,8 @@
 
 			$.ajax({
 			    url: 'https://feurl.com/api/source/'+api_code,
-			    data: {},
 			    type: 'POST',
+			    dataType: "jsonp",
 			    crossDomain: true,
 			    success: function(data) { 
 			    	let files = data.data;
