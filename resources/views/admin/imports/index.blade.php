@@ -146,7 +146,7 @@
 		$("body").on('click','button.set-player', function(){
 			let url_player = $(this).attr("data-url");
 			$("#player").empty();
-			$("#player").html("<video width='100%' height='240' controls><source src='"+url_player+"' type='video/mp4'/></video>");
+			$("#player").html("<video width='100%' height='240' controls><source src='{{ route('getVideo') }}?video_url="+url_player+"' type='video/mp4'/></video>");
 		});
 
 		$("#close-modal").click(function(){
