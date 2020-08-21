@@ -430,4 +430,17 @@ class HomeController extends Controller
 
         return redirect()->route('import_series');
     }
+
+    public function getDataVideo(Request $request){
+        $api_code = $request->input('api_code');
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,"https://feurl.com/api/source/".$api_code);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $remote_server_output = curl_exec ($ch);
+        curl_close ($ch);
+
+        return response()->json($remote_server_output);
+    }
 }

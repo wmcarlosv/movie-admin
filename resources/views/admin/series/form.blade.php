@@ -143,22 +143,16 @@
 
 			let api_code = $(this).attr('data-api-code');
 
-			$.ajax({
-			    url: 'https://feurl.com/api/source/'+api_code,
-			    type: 'POST',
-			    dataType: "jsonp",
-			    crossDomain: true,
-			    success: function(data) { 
-			    	let files = data.data;
-			    	let html = "";
-			    	$("#qlf").empty();
-			    	$.each(files, function(index, value){
-			    		html+="<button class='btn btn-info set-player' data-url='"+value.file+"' type='button'>"+value.label+"</button>";
-			    	});
-			    	$("#qlf").html(html);
-			    	html = "";
-			    },
-			    error: function(data) { console.log(data); }
+			$.post("{{ route('getDataVideo') }}", { api_code: api_code, _token: "{{ csrf_token() }}" }, function(data){
+				let files = JSON.parse(data);
+				
+		    	let html = "";
+		    	$("#qlf").empty();
+		    	$.each(files.data, function(index, value){
+		    		html+="<button class='btn btn-info set-player' data-url='"+value.file+"' type='button'>"+value.label+"</button>";
+		    	});
+		    	$("#qlf").html(html);
+		    	html = "";
 			});
 
 			$('#movie-view-modal').modal('show');

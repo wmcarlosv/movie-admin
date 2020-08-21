@@ -26,6 +26,8 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
 	Route::post('/importMovies','HomeController@setImportMovies')->name('set_import_movies');
 	Route::post('/saveMovies','HomeController@saveMovies')->name('save_movies');
 
+	Route::post('/get-data-video','HomeController@getDataVideo')->name('getDataVideo');
+
 	Route::get('/importSeries','HomeController@importSeries')->name('import_series');
 	Route::post('/importSeries','HomeController@setImportSeries')->name('set_import_series');
 	Route::post('/saveSeries','HomeController@saveSeries')->name('saveSeries');
