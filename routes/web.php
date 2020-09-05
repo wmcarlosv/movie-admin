@@ -45,3 +45,6 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
 	Route::resource('seasons','SeasonsController');
 	Route::resource('chapters','ChaptersController');
 });
+
+Route::get('/see/{secure_link}','ComercialController@see_movie')->middleware('check.client')->name('see_movie');
+

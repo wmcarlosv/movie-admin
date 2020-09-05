@@ -53,6 +53,7 @@ class UsersController extends Controller
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->role = $request->input('role');
+        $user->client_id = $request->input('client_id');
         $user->password = bcrypt($request->input('password'));
 
         if($user->save()){
@@ -107,7 +108,7 @@ class UsersController extends Controller
         $user = User::findorfail($id);
         $user->name = $request->input('name');
         $user->email = $request->input('email');
-
+        $user->client_id = $request->input('client_id');
         if( !empty($request->input('password')) ){
             $user->password = bcrypt($request->input('password'));
         }

@@ -23,6 +23,7 @@
 							<th>Name</th>
 							<th>Email</th>
 							<th>Role</th>
+							<th>Client ID</th>
 							<th>Status</th>
 							<th>-</th>
 						</thead>
@@ -33,6 +34,7 @@
 									<td>{{ $user->name }}</td>
 									<td>{{ $user->email }}</td>
 									<td>{{ $user->role }}</td>
+									<td>{{ $user->client_id }}</td>
 									<td>
 										@if($user->status == 'A')
 											<span class="badge badge-success">Active</span>

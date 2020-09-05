@@ -94,6 +94,21 @@ class AppServiceProvider extends ServiceProvider
                 ]);
 
             }
+
+            if(Auth::user()->role == 'client'){
+                  $event->menu->add([
+                        'header' => 'MAIN MENU'
+                    ],[
+                        'text' => 'Dashboard',
+                        'icon' => 'fas fa-tachometer-alt',
+                        'route' => 'dashboard'
+                    ],[
+                        'text' => 'Profile',
+                        'icon' => 'fas fa-user',
+                        'route' => 'profile'
+                    ]
+                );
+            }
             
         });
     }

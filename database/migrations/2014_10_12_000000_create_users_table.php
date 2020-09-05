@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->enum('status',['A','I'])->nullable(false)->default('A');
             $table->string('phone',20)->nullable();
+            $table->string('client_id',5)->nullable();
             $table->timestamps();
         });
     }
