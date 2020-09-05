@@ -106,7 +106,7 @@
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">View Serie Chapter In Player</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close close-modal">&times;</button>
       </div>
 
       <!-- Modal body -->
@@ -120,7 +120,7 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" id="close-modal" class="btn btn-danger">Close</button>
+        <button type="button" class="btn btn-danger close-modal">Close</button>
       </div>
 
     </div>
@@ -164,7 +164,7 @@
 			$("#player").html("<video width='100%' height='240' controls><source src='{{ route('getVideo') }}?video_url="+url_player+"' type='video/mp4'/></video>");
 		});
 
-		$("#close-modal").click(function(){
+		$(".close-modal").click(function(){
 			$("#player").empty();
 			$('#movie-view-modal').modal('hide');
 		});

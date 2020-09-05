@@ -19,7 +19,9 @@ class CreateMoviesTable extends Migration
             $table->text('description')->nullable(false);
             $table->year('year')->nullable(false);
             $table->text('poster')->nullable();
-            $table->string('api_code',50)->nullable(false);
+            $table->enum('type',['api','url'])->nullable(false)->default('api');
+            $table->string('api_code',50)->nullable();
+            $table->text('direct_url')->nullable();
             $table->integer('views')->nullable()->default(0);
             $table->integer('downloads')->nullable()->default(0);
             $table->enum('status',['A','I'])->nullable(false)->default('A');

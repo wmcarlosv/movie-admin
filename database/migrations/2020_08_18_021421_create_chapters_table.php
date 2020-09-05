@@ -18,7 +18,9 @@ class CreateChaptersTable extends Migration
             $table->unsignedBigInteger('season_id');
             $table->string('title',150)->nullable(false);
             $table->integer('position')->nullable(false);
-            $table->string('api_code',50)->nullable(false);
+            $table->enum('type',['api','url'])->nullable(false)->default('api');
+            $table->string('api_code',50)->nullable();
+            $table->text('direct_url')->nullable();
             $table->timestamps();
 
             $table->foreign('season_id')->references('id')->on('seasons')->onUpdate('cascade')->onDelete('restrict');
