@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Auth;
 use Session;
+use Storage;
 
 class UsersController extends Controller
 {
@@ -149,8 +150,12 @@ class UsersController extends Controller
     }
 
     public function profile(){
-
-        return view('admin.users.profile',['title' => 'Manage Profile']);
+        $current_page = null;
+        $file = 'point.txt';
+        if(Storage::exists($file)){
+            $current_page = trim(Storage::get($file));
+        }
+        return view('admin.users.profile',['title' => 'Manage Profile', 'current_page' => $current_page]);
     }
 
     public function update_profile(Request $request){
