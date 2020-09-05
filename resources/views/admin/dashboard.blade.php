@@ -47,7 +47,7 @@
 						<thead>
 							<th>Title</th>
 							<th style="width: 25%;">Description</th>
-							<th>Categories</th>
+							<th style="width: 15%;">Categories</th>
 							<th>Year</th>
 							<th>Poster</th>
 							<th>-</th>
