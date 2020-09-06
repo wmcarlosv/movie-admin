@@ -29,6 +29,7 @@ class UsersController extends Controller
      */
     public function create()
     {
+
         $title = 'New User';
         $type = 'new';
 

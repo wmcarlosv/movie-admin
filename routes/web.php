@@ -34,17 +34,17 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
 	Route::post('/saveSeries','HomeController@saveSeries')->name('saveSeries');
 	Route::get('/getAvailablesMovies','HomeController@getAvailablesMovies')->name('getAvailablesMovies');
 
-	Route::resource('users','UsersController');
+	Route::resource('users','UsersController')->middleware(['can:isAdmin']);
 	Route::get('/profile','UsersController@profile')->name('profile');
 	Route::post('/update_profile','UsersController@update_profile')->name('update_profile');
 	Route::post('/change_password','UsersController@change_password')->name('change_password');
 
-	Route::resource('categories','CategoriesController');
-	Route::resource('movies','MoviesController');
+	Route::resource('categories','CategoriesController')->middleware(['can:isAdmin']);;
+	Route::resource('movies','MoviesController')->middleware(['can:isAdmin']);;
 
-	Route::resource('series','SeriesController');
-	Route::resource('seasons','SeasonsController');
-	Route::resource('chapters','ChaptersController');
+	Route::resource('series','SeriesController')->middleware(['can:isAdmin']);;
+	Route::resource('seasons','SeasonsController')->middleware(['can:isAdmin']);;
+	Route::resource('chapters','ChaptersController')->middleware(['can:isAdmin']);;
 });
 
 Route::get('/see/{secure_link}','ComercialController@see_movie')->middleware('check.client')->name('see_movie');
