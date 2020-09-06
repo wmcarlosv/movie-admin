@@ -40,9 +40,15 @@ class HomeController extends Controller
         $categories = Category::all();
         $movies = Movie::all();
         $series = Serie::all();
-        $movies_availables = Movie::where('status','=','A')->paginate(5);
+        $q = (isset($_GET['q']) and !empty($_GET['q'])) ? $_GET['q']: '';
+        if(isset($q) and !empty($q)){
+            $movies_availables = Movie::where('title','like','%'.$q.'%')->paginate(5);
+        }else{
+            $movies_availables = Movie::where('status','=','A')->paginate(5);
+        }
+        
 
-        return view('admin.dashboard',['ccat'=>$categories->count(), 'cmov' => $movies->count(), 'cser' => $series->count(), 'movies_availables' => $movies_availables]);
+        return view('admin.dashboard',['ccat'=>$categories->count(), 'cmov' => $movies->count(), 'cser' => $series->count(), 'movies_availables' => $movies_availables, 'q' => $q]);
     }
 
     public function importMovies(){

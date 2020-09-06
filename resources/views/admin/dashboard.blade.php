@@ -8,13 +8,8 @@
 
 @section('css')
 <style type="text/css">
-	div#pagination{
-		margin-bottom: 10px;
-		float: right;
-	}
-
 	div#pagination-footer{
-		margin-top: 10px;
+		margin-top: 15px;
 		float: right;
 	}
 </style>
@@ -57,9 +52,27 @@
 					<h3><i class="fas fa-ticket-alt"></i> List Movies</h3>
 				</div>
 				<div class="card-body">
-					<div id="pagination">
-						{{ $movies_availables->links() }}
+					<div class="row" style="margin-bottom: 20px;">
+						<div class="col-md-6">
+							<div class="search">
+								{!! Form::open(['route' => 'dashboard', 'method' => 'GET']) !!}
+								<div class="input-group">
+									<input type="text" name="q" value="{{ @$q }}" id="q" class="form-control" />
+									<div class="input-group-append">
+										<button class="btn btn-success"><i class="fas fa-search"></i></button>
+									</div>
+								</div>
+								{!! Form::close() !!}
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div id="pagination" style="float:right;">
+								{{ $movies_availables->appends(['q' => $q])->links() }}
+							</div>
+						</div>
 					</div>
+					
+					
 					<table class="table table-bordered table-striped">
 						<thead>
 							<th>Title</th>
