@@ -38,7 +38,7 @@ class HomeController extends Controller
     public function index()
     {
         $categories = Category::all();
-        $movies = Movie::all();
+        $movies = Movie::where('status','=','A')->get();
         $series = Serie::all();
         $q = (isset($_GET['q']) and !empty($_GET['q'])) ? $_GET['q']: '';
         if(isset($q) and !empty($q)){
