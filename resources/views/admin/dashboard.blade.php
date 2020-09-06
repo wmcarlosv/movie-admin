@@ -6,6 +6,20 @@
 	<h2>Dashboard</h2>
 @stop
 
+@section('css')
+<style type="text/css">
+	div#pagination{
+		margin-bottom: 10px;
+		float: right;
+	}
+
+	div#pagination-footer{
+		margin-top: 10px;
+		float: right;
+	}
+</style>
+@stop
+
 @section('content')
    	<div class="row">
 		<div class="col-md-4">
@@ -40,10 +54,13 @@
 		<div class="col-md-12">
 			<div class="card card-success">
 				<div class="card-header">
-					<h3><i class="fas fa-ticket-alt"></i> Lista de Peliculas</h3>
+					<h3><i class="fas fa-ticket-alt"></i> List Movies</h3>
 				</div>
 				<div class="card-body">
-					<table class="table data-table table-bordered table-striped">
+					<div id="pagination">
+						{{ $movies_availables->links() }}
+					</div>
+					<table class="table table-bordered table-striped">
 						<thead>
 							<th>Title</th>
 							<th style="width: 25%;">Description</th>
@@ -71,6 +88,9 @@
 							@endforeach
 						</tbody>
 					</table>
+					<div id="pagination-footer">
+						{{ $movies_availables->links() }}
+					</div>
 				</div>
 			</div>
 		</div>
@@ -81,14 +101,14 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h3 class="modal-title">
-						Movie Llinks
+						Movie Links
 					</h3>
 				</div>
 				<div class="modal-body">
 					<table class="table table-bordered table-striped">
 						<thead>
 							<th>Link</th>
-							<th>Qualify</th>
+							<th>Quality</th>
 						</thead>
 						<tbody id="load_links">
 							

@@ -32,6 +32,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
 	Route::get('/importSeries','HomeController@importSeries')->name('import_series');
 	Route::post('/importSeries','HomeController@setImportSeries')->name('set_import_series');
 	Route::post('/saveSeries','HomeController@saveSeries')->name('saveSeries');
+	Route::get('/getAvailablesMovies','HomeController@getAvailablesMovies')->name('getAvailablesMovies');
 
 	Route::resource('users','UsersController');
 	Route::get('/profile','UsersController@profile')->name('profile');

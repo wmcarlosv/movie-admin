@@ -25,7 +25,7 @@ class MoviesImport extends Command
      *
      * @var string
      */
-    protected $description = 'Update List Movies!!';
+    protected $description = 'Import List Movies!!';
 
     /**
      * Create a new command instance.
