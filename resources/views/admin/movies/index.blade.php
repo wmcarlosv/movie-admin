@@ -17,6 +17,26 @@
 					<a href="{{ route('movies.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> New Movie</a>
 					<br />
 					<br />
+					<div class="row" style="margin-bottom: 20px;">
+						<div class="col-md-6">
+							<div class="search">
+								{!! Form::open(['route' => 'movies.index', 'method' => 'GET']) !!}
+								<div class="input-group">
+									<input type="text" name="q" value="{{ @$q }}" id="q" class="form-control" />
+									<div class="input-group-append">
+										<button class="btn btn-success"><i class="fas fa-search"></i></button>
+									</div>
+								</div>
+								{!! Form::close() !!}
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div id="pagination" style="float:right;">
+								{{ $data->appends(['q' => $q])->links() }}
+							</div>
+						</div>
+					</div>
+
 					<table class="table table-bordered table-striped">
 						<thead>
 							<th>ID</th>
@@ -66,6 +86,9 @@
 							@endforeach
 						</tbody>
 					</table>
+					<div id="pagination" style="float:right; margin-top: 20px;">
+						{{ $data->appends(['q' => $q])->links() }}
+					</div>
 				</div>
 			</div>
 		</div>
@@ -76,7 +99,6 @@
 @section('plugins.Sweetalert2', true)
 @section('js')
 <script type="text/javascript">
-	$("table.table").DataTable();
 
 	$(".delete").click(function(e){	
 

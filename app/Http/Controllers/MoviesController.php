@@ -18,9 +18,16 @@ class MoviesController extends Controller
      */
     public function index()
     {
-        $data = Movie::all();
+        $q = (isset($_GET['q']) and !empty($_GET['q'])) ? $_GET['q']: '';
+
+        if(isset($q) and !empty($q)){
+            $data = Movie::where('title','like','%'.$q.'%')->orWhere('description','like','%'.$q.'%')->orWhere('year','like','%'.$q.'%')->paginate(5);
+        }else{
+            $data = Movie::paginate(5);
+        }
+
         $title = 'Manage Movies';
-        return view('admin.movies.index',['title' => $title, 'data' => $data]);
+        return view('admin.movies.index',['title' => $title, 'data' => $data, 'q' => $q]);
     }
 
     /**
