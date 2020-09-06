@@ -102,7 +102,7 @@
 						</tbody>
 					</table>
 					<div id="pagination-footer">
-						{{ $movies_availables->links() }}
+						{{ $movies_availables->appends(['q' => $q])->links() }}
 					</div>
 				</div>
 			</div>
