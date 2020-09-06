@@ -42,7 +42,11 @@ class HomeController extends Controller
         $series = Serie::all();
         $q = (isset($_GET['q']) and !empty($_GET['q'])) ? $_GET['q']: '';
         if(isset($q) and !empty($q)){
-            $movies_availables = Movie::where([ ['title','like','%'.$q.'%'],['status','=','A'] ])->orWhere('description','like','%'.$q.'%')->orWhere('year','like','%'.$q.'%')->paginate(5);
+            $movies_availables = Movie::where('status','=','A')->where(function($query) use ($q){
+                $query->orWhere('title','like','%'.$q.'%')
+                ->orWhere('description','like','%'.$q.'%')
+                ->orWhere('year','like','%'.$q.'%');
+            })->paginate(5);
         }else{
             $movies_availables = Movie::where('status','=','A')->paginate(5);
         }
