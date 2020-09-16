@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('movies','MoviesController@getByPhone');
+Route::get('movie/{id}','MoviesController@movieById');
+Route::get('movie-categories/{id}','MoviesController@getCategoriesByMovie');
+Route::post('movies-by-categories','MoviesController@getMoviesByCategories');
+
+Route::get('categories','MoviesController@getCategories');
+
+Route::get('search/{type}/{q}','MoviesController@searchData');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

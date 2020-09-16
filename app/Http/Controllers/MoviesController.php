@@ -173,4 +173,91 @@ class MoviesController extends Controller
 
         return redirect()->route('movies.index');
     }
+
+    public function getByPhone(){
+        $movies = Movie::where('status','=','A')->orderBy('created_at','DESC')->get();
+        return response()->json($movies);
+    }
+
+    public function movieById($id = NULL){
+        $movie = Movie::findorfail($id);
+        return response()->json($movie);
+    }
+
+    public function getCategoriesByMovie($movie_id){
+        $categories = DB::select(
+            DB::raw("SELECT
+                        c.name,
+                        c.id
+                        from movie_categories mc
+                        inner join categories as c on (c.id = mc.category_id)
+                    WHERE mc.movie_id = ".$movie_id));
+
+        return response()->json($categories);
+    }
+
+    public function getMoviesByCategories(Request $request){
+        $categories = explode(',',$request->input('categories'));
+        $cc = count($categories);
+        $string = "";
+        foreach ($categories as $key => $value) {
+            if( ($key+1) < $cc ){
+                $string.="'".$value."',";
+            }else{
+                $string.="'".$value."'";
+            }   
+        }
+
+        $currentMovieID = $request->input('current_id');
+
+        $movies = DB::select(DB::raw("select 
+                                            m.id,
+                                            m.title,
+                                            m.poster,
+                                            m.api_code,
+                                            coalesce(m.views, 0) views,
+                                            coalesce(m.downloads, 0) downloads
+                                      from movie_categories mc
+                                            inner join movies m on (m.id = mc.movie_id)
+                                            inner join categories c on (c.id = mc.category_id)
+                                      where c.name in (".$string.") and m.id <> $currentMovieID
+                                            group by m.id, m.title, m.poster, m.api_code, views, downloads order by (views+downloads) DESC
+                                      limit 5"));
+
+        return response()->json($movies);
+    }
+
+    public function getCategories(){
+      $categories = DB::select(DB::raw('SELECT 
+                                          c.id, 
+                                          c.name,
+                                          (select count(mc.id) from movie_categories as mc where mc.category_id = c.id) as qty
+                                        FROM categories c 
+                                        ORDER BY c.name ASC'));
+
+      return response()->json($categories);
+    }
+
+    public function searchData($type, $q){
+
+      $data = [];
+
+      if($type == "category"){
+        $data = DB::select(DB::raw('SELECT m.id,
+                                           m.title,
+                                           m.poster,
+                                           m.api_code,
+                                           coalesce(m.views, 0) views,
+                                           coalesce(m.downloads, 0) downloads 
+                                    FROM movies m 
+                                      INNER JOIN movie_categories mc on (m.id = mc.movie_id) 
+                                    WHERE mc.category_id = '.$q));
+      }
+
+      if($type == "search"){
+        $data = Movie::where('title','like','%'.$q.'%')->orWhere('description','like','%'.$q.'%')->orWhere('year','like','%'.$q.'%')->get();
+      }
+
+      return response()->json($data);
+    }
 }

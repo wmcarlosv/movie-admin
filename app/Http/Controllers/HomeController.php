@@ -453,6 +453,7 @@ class HomeController extends Controller
         curl_close ($ch);
 
         return response()->json($remote_server_output);
+        
     }
 
     public function getVideo(Request $request){
