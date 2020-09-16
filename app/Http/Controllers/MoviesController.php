@@ -175,7 +175,7 @@ class MoviesController extends Controller
     }
 
     public function getByPhone(){
-        $movies = Movie::where('status','=','A')->orderBy('created_at','DESC')->limit(20)->get();
+        $movies = Movie::where('status','=','A')->orderBy('created_at','DESC')->paginate(18);
         return response()->json($movies);
     }
 
