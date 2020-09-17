@@ -231,7 +231,12 @@ class MoviesController extends Controller
       $categories = DB::select(DB::raw('SELECT 
                                           c.id, 
                                           c.name,
-                                          (select count(mc.id) from movie_categories as mc where mc.category_id = c.id) as qty
+                                          (select 
+                                              count(mc.id) 
+                                            from movie_categories as mc where mc.category_id = c.id
+                                            inner join movies as m on (m.id = mc.movie_id)
+                                            where m.status = "A"
+                                          ) as qty
                                         FROM categories c 
                                         ORDER BY c.name ASC'));
 
@@ -247,7 +252,8 @@ class MoviesController extends Controller
         $data = DB::table('movies')
               ->select('movies.id','movies.title','movies.poster','movies.views','movies.downloads','movies.api_code')
               ->join('movie_categories','movies.id','=','movie_categories.movie_id')
-              ->where('movie_categories.category_id','=',$q)->paginate(18);
+              ->where('movie_categories.category_id','=',$q)
+              ->where('movies.status','=','A')->paginate(18);
       }
 
       if($type == "search"){
