@@ -45,6 +45,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
 	Route::resource('series','SeriesController')->middleware(['can:isAdmin']);;
 	Route::resource('seasons','SeasonsController')->middleware(['can:isAdmin']);;
 	Route::resource('chapters','ChaptersController')->middleware(['can:isAdmin']);;
+	Route::resource('applications','ApplicationsController')->middleware(['can:isAdmin']);;
 });
 
 Route::get('/see/{secure_link}','ComercialController@see_movie')->middleware('check.client')->name('see_movie');
