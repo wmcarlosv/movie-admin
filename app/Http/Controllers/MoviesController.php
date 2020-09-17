@@ -243,19 +243,15 @@ class MoviesController extends Controller
       $data = [];
 
       if($type == "category"){
-        $data = DB::select(DB::raw('SELECT m.id,
-                                           m.title,
-                                           m.poster,
-                                           m.api_code,
-                                           coalesce(m.views, 0) views,
-                                           coalesce(m.downloads, 0) downloads 
-                                    FROM movies m 
-                                      INNER JOIN movie_categories mc on (m.id = mc.movie_id) 
-                                    WHERE mc.category_id = '.$q));
+
+        $data = DB::table('movies')
+              ->select('movies.id','movies.title','movies.poster','movies.views','movies.downloads')
+              ->join('movie_categories','movies.id','=','movie_categories.movie_id')
+              ->where('movie_categories.category_id','=',$q)->paginate(18);
       }
 
       if($type == "search"){
-        $data = Movie::where('title','like','%'.$q.'%')->orWhere('description','like','%'.$q.'%')->orWhere('year','like','%'.$q.'%')->get();
+        $data = Movie::where('title','like','%'.$q.'%')->orWhere('description','like','%'.$q.'%')->orWhere('year','like','%'.$q.'%')->paginate(18);
       }
 
       return response()->json($data);
