@@ -228,17 +228,17 @@ class MoviesController extends Controller
     }
 
     public function getCategories(){
-      $categories = DB::select(DB::raw('SELECT 
+      $categories = DB::select(DB::raw("SELECT 
                                           c.id, 
                                           c.name,
                                           (select 
                                               count(mc.id) 
-                                            from movie_categories as mc where mc.category_id = c.id
+                                            from movie_categories as mc 
                                             inner join movies as m on (m.id = mc.movie_id)
-                                            where m.status = "A"
+                                            where m.status = 'A' and mc.category_id = c.id
                                           ) as qty
                                         FROM categories c 
-                                        ORDER BY c.name ASC'));
+                                        ORDER BY c.name ASC"));
 
       return response()->json($categories);
     }
