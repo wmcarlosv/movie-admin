@@ -50,7 +50,7 @@
 <script type="text/javascript">
 	$("table.table").DataTable();
 
-	$(".delete").click(function(e){	
+	$("body").on('clik','.delete', function(){	
 
 		Swal.fire({
 			title: "Are you sure to perform this action?",
