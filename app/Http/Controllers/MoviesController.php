@@ -174,8 +174,21 @@ class MoviesController extends Controller
         return redirect()->route('movies.index');
     }
 
-    public function getByPhone(){
-        $movies = Movie::where('status','=','A')->orderBy('created_at','DESC')->paginate(18);
+    public function getByPhone($order = 'last_upload'){
+
+        if($order == 'last_upload'){
+          $movies = Movie::where('status','=','A')->orderBy('created_at','DESC')->paginate(18);
+        }
+
+        if($order == 'Year'){
+          $movies = Movie::where('status','=','A')->orderBy('year','DESC')->paginate(18);
+        }
+
+        if($order == 'populars'){
+          $movies = Movie::where('status','=','A')->orderBy('views','DESC')->orderBy('downloads','DESC')->paginate(18);
+        }
+
+        
         return response()->json($movies);
     }
 
