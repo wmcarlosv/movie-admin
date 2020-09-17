@@ -245,7 +245,7 @@ class MoviesController extends Controller
       if($type == "category"){
 
         $data = DB::table('movies')
-              ->select('movies.id','movies.title','movies.poster','movies.views','movies.downloads')
+              ->select('movies.id','movies.title','movies.poster','movies.views','movies.downloads','movies.api_code')
               ->join('movie_categories','movies.id','=','movie_categories.movie_id')
               ->where('movie_categories.category_id','=',$q)->paginate(18);
       }
