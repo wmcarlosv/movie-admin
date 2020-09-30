@@ -21,9 +21,10 @@ class MoviesController extends Controller
         $q = (isset($_GET['q']) and !empty($_GET['q'])) ? $_GET['q']: '';
 
         if(isset($q) and !empty($q)){
-            $data = Movie::where('title','like','%'.$q.'%')->orWhere('description','like','%'.$q.'%')->orWhere('year','like','%'.$q.'%')->paginate(5);
+            $data = Movie::where('title','like','%'.$q.'%')->orWhere('description','like','%'.$q.'%')->orWhere('year','like','%'.$q.'%')
+            ->orderBy('created_at','DESC')->paginate(5);
         }else{
-            $data = Movie::paginate(5);
+            $data = Movie::orderBy('created_at','DESC')->paginate(5);;
         }
 
         $title = 'Manage Movies';
