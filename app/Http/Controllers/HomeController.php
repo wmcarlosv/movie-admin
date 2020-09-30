@@ -48,7 +48,7 @@ class HomeController extends Controller
                 ->orWhere('year','like','%'.$q.'%');
             })->orderBy('created_at','DESC')->paginate(5);
         }else{
-            $movies_availables = Movie::where('status','=','A')->paginate(5);
+            $movies_availables = Movie::where('status','=','A')->orderBy('created_at','DESC')->paginate(5);
         }
         
 
