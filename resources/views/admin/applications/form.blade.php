@@ -45,7 +45,7 @@
 					
 					<div class="form-group">
 						<label>About:</label>
-						<textarea class="form-control" required="required" name="about">{{ @$data->name }}</textarea>
+						<textarea class="form-control" required="required" name="about">{{ @$data->about }}</textarea>
 					</div>
 					<div class="row">
 						<div class="col-md-6">
