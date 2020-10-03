@@ -23,6 +23,8 @@ Route::get('categories','MoviesController@getCategories');
 
 Route::get('search/{type}/{q}','MoviesController@searchData');
 
+Route::get('application/{code}','ApplicationsController@getData');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

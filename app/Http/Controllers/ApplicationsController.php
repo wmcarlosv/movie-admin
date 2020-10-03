@@ -145,4 +145,10 @@ class ApplicationsController extends Controller
 
         return redirect()->route('applications.index');
     }
+
+    public function getData($code){
+        $application = Application::select('name','about','version','play_store_url','privacy_policy','url_qualify','url_more_apps')->where('app_code','=',$code)->first();
+
+        return response()->json($application);
+    }
 }
