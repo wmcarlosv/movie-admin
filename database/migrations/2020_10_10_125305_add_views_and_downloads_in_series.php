@@ -14,7 +14,8 @@ class AddViewsAndDownloadsInSeries extends Migration
     public function up()
     {
         Schema::table('series', function (Blueprint $table) {
-            //
+            $table->integer('views')->nullable()->default(0);
+            $table->integer('downloads')->nullable()->default(0);
         });
     }
 
@@ -26,8 +27,7 @@ class AddViewsAndDownloadsInSeries extends Migration
     public function down()
     {
         Schema::table('series', function (Blueprint $table) {
-            $table->integer('views')->nullable()->default(0);
-            $table->integer('downloads')->nullable()->default(0);
+            
         });
     }
 }
