@@ -178,4 +178,22 @@ class SeriesController extends Controller
 
         return redirect()->route('series.index');
     }
+
+    public function getByPhone($order = 'last_upload'){
+
+        if($order == 'last_upload'){
+          $series = Serie::where('status','=','A')->orderBy('created_at','DESC')->paginate(18);
+        }
+
+        if($order == 'Year'){
+          $series = Serie::where('status','=','A')->orderBy('year','DESC')->paginate(18);
+        }
+
+        if($order == 'populars'){
+          $series = Serie::where('status','=','A')->orderBy('views','DESC')->orderBy('downloads','DESC')->paginate(18);
+        }
+
+        
+        return response()->json($series);
+    }
 }

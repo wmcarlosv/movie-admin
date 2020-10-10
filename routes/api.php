@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('movies/{order?}','MoviesController@getByPhone');
+Route::get('series/{order?}','SeriesController@getByPhone');
+
 Route::get('movie/{id}','MoviesController@movieById');
 Route::get('movie-categories/{id}','MoviesController@getCategoriesByMovie');
 Route::post('movies-by-categories','MoviesController@getMoviesByCategories');
