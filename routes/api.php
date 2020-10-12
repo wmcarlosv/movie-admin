@@ -18,8 +18,13 @@ Route::get('movies/{order?}','MoviesController@getByPhone');
 Route::get('series/{order?}','SeriesController@getByPhone');
 
 Route::get('movie/{id}','MoviesController@movieById');
+Route::get('serie/{id}','SeriesController@serieById');
+
 Route::get('movie-categories/{id}','MoviesController@getCategoriesByMovie');
+Route::get('serie-categories/{id}','SeriesController@getCategoriesBySerie');
+
 Route::post('movies-by-categories','MoviesController@getMoviesByCategories');
+Route::post('series-by-categories','SeriesController@getSeriesByCategories');
 
 Route::get('categories','MoviesController@getCategories');
 

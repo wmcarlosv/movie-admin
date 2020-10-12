@@ -196,4 +196,51 @@ class SeriesController extends Controller
         
         return response()->json($series);
     }
+
+    public function serieById($id = NULL){
+        $serie = Serie::findorfail($id);
+        return response()->json($serie);
+    }
+
+    public function getCategoriesBySerie($serie_id){
+        $categories = DB::select(
+            DB::raw("SELECT
+                        c.name,
+                        c.id
+                        from serie_categories sc
+                        inner join categories as c on (c.id = sc.category_id)
+                    WHERE sc.serie_id = ".$serie_id));
+
+        return response()->json($categories);
+    }
+
+    public function getSeriesByCategories(Request $request){
+        $categories = explode(',',$request->input('categories'));
+        $cc = count($categories);
+        $string = "";
+        foreach ($categories as $key => $value) {
+            if( ($key+1) < $cc ){
+                $string.="'".$value."',";
+            }else{
+                $string.="'".$value."'";
+            }   
+        }
+
+        $currentSerieID = $request->input('current_id');
+
+        $series = DB::select(DB::raw("select 
+                                            m.id,
+                                            m.title,
+                                            m.poster,
+                                            coalesce(m.views, 0) views,
+                                            coalesce(m.downloads, 0) downloads
+                                      from serie_categories mc
+                                            inner join serie m on (m.id = mc.serie_id)
+                                            inner join categories c on (c.id = mc.category_id)
+                                      where c.name in (".$string.") and m.id <> $currentSerieID
+                                            group by m.id, m.title, m.poster, m.api_code, views, downloads order by (views+downloads) DESC
+                                      limit 5"));
+
+        return response()->json($series);
+    }
 }
