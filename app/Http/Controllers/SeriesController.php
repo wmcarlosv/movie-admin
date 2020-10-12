@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Serie;
+use App\Season;
+use App\Chapter;
 use App\Category;
 use Storage;
 use DB;
@@ -198,8 +200,27 @@ class SeriesController extends Controller
     }
 
     public function serieById($id = NULL){
+        $data = [];
+        $ssn = [];
+
         $serie = Serie::findorfail($id);
-        return response()->json($serie);
+        $seasons = Season::where('serie_id','=',$serie->id)->get();
+
+        $data['id'] = $serie->id;
+        $data['title'] = $serie->id;
+        $data['description'] = $serie->id;
+        $data['year'] = $serie->id;
+        $data['status'] = $serie->id;
+        $data['views'] = $serie->id;
+        $data['downloads'] = $serie->id;
+
+        foreach ($seasons as $index => $obj) {
+            $ssn[$index][$obj->title] = Chapter::select('title','position','api_code')->where('season_id','=',$obj->id)->orderBy('position','ASC')->get();
+        }
+
+        $data['seasons'] = $ssn;
+
+        return response()->json($data);
     }
 
     public function getCategoriesBySerie($serie_id){
