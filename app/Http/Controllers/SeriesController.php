@@ -207,12 +207,13 @@ class SeriesController extends Controller
         $seasons = Season::where('serie_id','=',$serie->id)->get();
 
         $data['id'] = $serie->id;
-        $data['title'] = $serie->id;
-        $data['description'] = $serie->id;
-        $data['year'] = $serie->id;
-        $data['status'] = $serie->id;
-        $data['views'] = $serie->id;
-        $data['downloads'] = $serie->id;
+        $data['title'] = $serie->title;
+        $data['description'] = $serie->description;
+        $data['poster'] = $serie->poster;
+        $data['year'] = $serie->year;
+        $data['status'] = $serie->status;
+        $data['views'] = $serie->views;
+        $data['downloads'] = $serie->downloads;
 
         foreach ($seasons as $index => $obj) {
             $ssn[$index][$obj->title] = Chapter::select('title','position','api_code')->where('season_id','=',$obj->id)->orderBy('position','ASC')->get();
