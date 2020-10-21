@@ -95,6 +95,10 @@ class AppServiceProvider extends ServiceProvider
                             'icon' => 'fas fa-file-import'
                         ]
                     ]
+                ],[
+                    'text' => 'Channels',
+                    'icon' => 'fas fa-tv',
+                    'route' => 'channels.index'
                 ]);
 
             }

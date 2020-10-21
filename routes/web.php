@@ -39,13 +39,15 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
 	Route::post('/update_profile','UsersController@update_profile')->name('update_profile');
 	Route::post('/change_password','UsersController@change_password')->name('change_password');
 
-	Route::resource('categories','CategoriesController')->middleware(['can:isAdmin']);;
-	Route::resource('movies','MoviesController')->middleware(['can:isAdmin']);;
+	Route::resource('categories','CategoriesController')->middleware(['can:isAdmin']);
+	Route::resource('movies','MoviesController')->middleware(['can:isAdmin']);
 
-	Route::resource('series','SeriesController')->middleware(['can:isAdmin']);;
-	Route::resource('seasons','SeasonsController')->middleware(['can:isAdmin']);;
-	Route::resource('chapters','ChaptersController')->middleware(['can:isAdmin']);;
-	Route::resource('applications','ApplicationsController')->middleware(['can:isAdmin']);;
+	Route::resource('series','SeriesController')->middleware(['can:isAdmin']);
+	Route::resource('seasons','SeasonsController')->middleware(['can:isAdmin']);
+	Route::resource('chapters','ChaptersController')->middleware(['can:isAdmin']);
+	Route::resource('applications','ApplicationsController')->middleware(['can:isAdmin']);
+
+	Route::resource('channels','ChannelsController')->middleware(['can:isAdmin']);
 });
 
 Route::get('/see/{secure_link}','ComercialController@see_movie')->middleware('check.client')->name('see_movie');
