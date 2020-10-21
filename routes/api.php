@@ -29,6 +29,7 @@ Route::post('series-by-categories','SeriesController@getSeriesByCategories');
 Route::get('categories','MoviesController@getCategories');
 
 Route::get('search/{type}/{q}','MoviesController@searchData');
+Route::get('search-series/{type}/{q}','SeriesController@searchData');
 
 Route::get('application/{code}','ApplicationsController@getData');
 

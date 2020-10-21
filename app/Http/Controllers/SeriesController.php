@@ -265,4 +265,24 @@ class SeriesController extends Controller
 
         return response()->json($series);
     }
+
+    public function searchData($type, $q){
+
+      $data = [];
+
+      if($type == "category"){
+
+        $data = DB::table('series')
+              ->select('series.id','series.title','series.poster','series.views','series.downloads')
+              ->join('serie_categories','series.id','=','serie_categories.movie_id')
+              ->where('serie_categories.category_id','=',$q)
+              ->where('series.status','=','A')->paginate(18);
+      }
+
+      if($type == "search"){
+        $data = Serie::where('title','like','%'.$q.'%')->orWhere('description','like','%'.$q.'%')->orWhere('year','like','%'.$q.'%')->paginate(18);
+      }
+
+      return response()->json($data);
+    }
 }
