@@ -257,10 +257,10 @@ class SeriesController extends Controller
                                             coalesce(m.views, 0) views,
                                             coalesce(m.downloads, 0) downloads
                                       from serie_categories mc
-                                            inner join serie m on (m.id = mc.serie_id)
+                                            inner join series m on (m.id = mc.serie_id)
                                             inner join categories c on (c.id = mc.category_id)
                                       where c.name in (".$string.") and m.id <> $currentSerieID
-                                            group by m.id, m.title, m.poster, m.api_code, views, downloads order by (views+downloads) DESC
+                                            group by m.id, m.title, m.poster, views, downloads order by (views+downloads) DESC
                                       limit 5"));
 
         return response()->json($series);
