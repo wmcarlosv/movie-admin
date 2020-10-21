@@ -150,4 +150,10 @@ class ChannelsController extends Controller
 
         return redirect()->route('channels.index');
     }
+
+    public function getByPhone(){
+        $channels = Channel::all();
+
+        return response()->json($channels);
+    }
 }
