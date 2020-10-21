@@ -41,7 +41,7 @@
 									<td>
 										<a href="{{ route('channels.edit',[$channel->id]) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>
 										{!! Form::open(['route' => ['channels.destroy',$channel->id], 'method' => 'DELETE', 'style' => 'display:inline;', 'id' => 'delete_'.$channel->id]) !!}
-											<button data-id="{{ $channel->id }}" class="delete btn btn-danger" type="button"><i class="fas fa-times"></i></button>
+											<button data-id="{{ $channel->id }}" class="delete btn @if($channel->status == 'A') btn-danger @else btn-success @endif" type="button">@if($channel->status == 'A') <i class="fas fa-times"></i> @else <i class="fas fa-plus"></i> @endif</button>
 										{!! Form::close() !!}
 									</td>
 								</tr>
