@@ -274,7 +274,7 @@ class SeriesController extends Controller
 
         $data = DB::table('series')
               ->select('series.id','series.title','series.poster','series.views','series.downloads')
-              ->join('serie_categories','series.id','=','serie_categories.movie_id')
+              ->join('serie_categories','series.id','=','serie_categories.serie_id')
               ->where('serie_categories.category_id','=',$q)
               ->where('series.status','=','A')->paginate(18);
       }
