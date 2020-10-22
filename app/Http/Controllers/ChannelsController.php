@@ -152,7 +152,7 @@ class ChannelsController extends Controller
     }
 
     public function getByPhone(){
-        $channels = Channel::all();
+        $channels = Channel::where('status','=','A')->get();
 
         return response()->json($channels);
     }
