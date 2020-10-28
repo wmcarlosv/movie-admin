@@ -157,8 +157,21 @@ class ChannelsController extends Controller
         return redirect()->route('channels.index');
     }
 
-    public function getByPhone(){
-        $channels = Channel::where('status','=','A')->get();
+    public function getByPhone($category_id = null){
+
+        if(isset($category_id) and !empty($category_id)){
+
+            $channels = Channel::where([
+                ['status','=','A'],
+                ['category_id','=',$category_id]
+            ])->get();
+
+        }else{
+
+            $channels = Channel::where('status','=','A')->get();
+            
+        }
+        
 
         return response()->json($channels);
     }
