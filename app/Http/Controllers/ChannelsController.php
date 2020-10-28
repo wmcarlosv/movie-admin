@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Channel;
 use Illuminate\Support\Facades\Storage;
 use Session;
+use App\Category;
 
 class ChannelsController extends Controller
 {
@@ -30,8 +31,8 @@ class ChannelsController extends Controller
     {
         $title = 'New Channel';
         $type = 'new';
-
-        return view('admin.channels.form',['title' => $title, 'type' => $type]);
+        $categories = Category::where('is_for_channel','=','Y')->get();
+        return view('admin.channels.form',['title' => $title, 'type' => $type, 'categories' => $categories]);
     }
 
     /**
@@ -44,11 +45,13 @@ class ChannelsController extends Controller
     {
         $request->validate([
             'title' => 'required',
+            'category_id' => 'required',
             'url' => 'required'
         ]);
 
         $channel = new Channel();
         $channel->title = $request->input('title');
+        $channel->category_id = $request->input('category_id');
         $channel->description = $request->input('description');
 
         if($request->hasFile('poster')){
@@ -90,7 +93,8 @@ class ChannelsController extends Controller
         $data = Channel::findorfail($id);
         $title = 'Edit Channel';
         $type = 'edit';
-        return view('admin.channels.form', ['title' => $title, 'data' => $data, 'type' => $type]);
+        $categories = Category::where('is_for_channel','=','Y')->get();
+        return view('admin.channels.form', ['title' => $title, 'data' => $data, 'type' => $type, 'categories' => $categories]);
     }
 
     /**
@@ -104,11 +108,13 @@ class ChannelsController extends Controller
     {
         $request->validate([
             'title' => 'required',
+            'category_id' => 'required',
             'url' => 'required'
         ]);
 
         $channel = Channel::findorfail($id);
         $channel->title = $request->input('title');
+        $channel->category_id = $request->input('category_id');
         $channel->description = $request->input('description');
 
         if($request->hasFile('poster')){
@@ -155,5 +161,10 @@ class ChannelsController extends Controller
         $channels = Channel::where('status','=','A')->get();
 
         return response()->json($channels);
+    }
+
+    public function getCategories(){
+      $categories = Category::where('is_for_channel','=','Y')->get();
+      return response()->json($categories);
     }
 }

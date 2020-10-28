@@ -48,6 +48,12 @@ class CategoriesController extends Controller
         $category = new Category();
         $category->name = $request->input('name');
 
+        if($request->input('is_for_channel')){
+            $category->is_for_channel = 'Y';
+        }else{
+            $category->is_for_channel = 'N';
+        }
+
         if($category->save()){
             Session::flash('success','Record Inserted Successfully!!');
         }else{
@@ -97,6 +103,11 @@ class CategoriesController extends Controller
 
         $category = Category::findorfail($id);
         $category->name = $request->input('name');
+        if($request->input('is_for_channel')){
+            $category->is_for_channel = 'Y';
+        }else{
+            $category->is_for_channel = 'N';
+        }
 
         if($category->update()){
             Session::flash('success','Record Updated Successfully!!');

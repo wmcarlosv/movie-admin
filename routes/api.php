@@ -35,6 +35,8 @@ Route::get('application/{code}','ApplicationsController@getData');
 
 Route::get('channels','ChannelsController@getByPhone');
 
+Route::get('channels/categories','ChannelsController@getCategories');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

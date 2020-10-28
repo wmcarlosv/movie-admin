@@ -8,7 +8,7 @@ class Category extends Model
 {
     protected $table = 'categories';
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name','is_for_channel'];
 
     public function movies(){
     	return $this->belongsToMany('App\Movie');

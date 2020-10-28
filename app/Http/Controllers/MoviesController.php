@@ -252,6 +252,7 @@ class MoviesController extends Controller
                                             where m.status = 'A' and mc.category_id = c.id
                                           ) as qty
                                         FROM categories c 
+                                        WHERE is_for_channel = 'N'
                                         ORDER BY c.name ASC"));
 
       return response()->json($categories);

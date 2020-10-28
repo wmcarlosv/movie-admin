@@ -21,6 +21,7 @@
 						<thead>
 							<th>ID</th>
 							<th>Title</th>
+							<th>Category</th>
 							<th>Description</th>
 							<th>Poster</th>
 							<th>-</th>
@@ -30,6 +31,7 @@
 								<tr>
 									<td>{{ $channel->id }}</td>
 									<td>{{ $channel->title }}</td>
+									<td>{{ $channel->category->name }}</td>
 									<td>{{ $channel->description }}</td>
 									<td>
 									@if(isset($channel->poster))

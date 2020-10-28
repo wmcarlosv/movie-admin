@@ -21,6 +21,7 @@
 						<thead>
 							<th>ID</th>
 							<th>Name</th>
+							<th>Is For Channel</th>
 							<th>-</th>
 						</thead>
 						<tbody>
@@ -28,6 +29,13 @@
 								<tr>
 									<td>{{ $category->id }}</td>
 									<td>{{ $category->name }}</td>
+									<td>
+										@if($category->is_for_channel == 'Y')
+											Yes
+										@else
+											No
+										@endif
+									</td>
 									<td>
 										<a href="{{ route('categories.edit',[$category->id]) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>
 										{!! Form::open(['route' => ['categories.destroy',$category->id], 'method' => 'DELETE', 'style' => 'display:inline;', 'id' => 'delete_'.$category->id]) !!}

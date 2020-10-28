@@ -33,6 +33,15 @@
 						<input type="text" name="title" class="form-control" value="{{ @$data->title }}" />
 					</div>
 					<div class="form-group">
+						<label>Category:</label>
+						<select class="form-control" name="category_id">
+							<option>-</option>
+							@foreach($categories as $category)
+								<option value="{{ $category->id }}" @if(@$data->category_id == $category->id) selected='selected' @endif>{{ $category->name }}</option>
+							@endforeach
+						</select>
+					</div>
+					<div class="form-group">
 						<label>Description:</label>
 						<textarea class="form-control" name="description">{{ @$data->description }}</textarea>
 					</div>
