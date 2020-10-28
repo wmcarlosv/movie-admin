@@ -100,7 +100,7 @@
 
 <!-- The Modal -->
 <div class="modal" id="movie-view-modal">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
 
       <!-- Modal Header -->
@@ -116,6 +116,16 @@
         <center><div class="btn-group" id="qlf"></div></center>
         <hr />
         <div id="player"></div>
+
+        <h3>Direct Links</h3>
+      	<hr />
+        <table class="table table-striped table-bordered">
+        	<thead>
+        		<th>Link</th>
+        		<th>Quality</th>
+        	</thead>
+        	<tbody id="load_links"></tbody>
+        </table>
       </div>
 
       <!-- Modal footer -->
@@ -147,12 +157,22 @@
 				let files = JSON.parse(data);
 				
 		    	let html = "";
+		    	let table = "";
+
 		    	$("#qlf").empty();
+		    	$("#load_links").empty();
+
 		    	$.each(files.data, function(index, value){
 		    		html+="<button class='btn btn-info set-player' data-url='"+value.file+"' type='button'>"+value.label+"</button>";
+		    		table+="<tr>";
+							table+="<td><a target='_blank' href='{{ url('/') }}/see/{{ Auth::user()->client_id }}|"+api_code+"|"+value.label+"'>{{ url('/') }}/see/{{ Auth::user()->client_id }}|"+api_code+"|"+value.label+"</a></td>";
+							table+="<td>"+value.label+"</td>";
+						table+="<tr>";
 		    	});
 		    	$("#qlf").html(html);
+		    	$("#load_links").html(table);
 		    	html = "";
+		    	table = "";
 			});
 
 			$('#movie-view-modal').modal('show');
