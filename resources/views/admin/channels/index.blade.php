@@ -31,7 +31,13 @@
 								<tr>
 									<td>{{ $channel->id }}</td>
 									<td>{{ $channel->title }}</td>
-									<td>{{ $channel->category->name }}</td>
+									<td>
+										@if(isset($channel->category_id) and !empty($channel->category_id))
+											{{ $channel->category->name }}
+										@else
+											No Category
+										@endif
+									</td>
 									<td>{{ $channel->description }}</td>
 									<td>
 									@if(isset($channel->poster))
