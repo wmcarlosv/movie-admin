@@ -33,7 +33,7 @@ Route::get('search-series/{type}/{q}','SeriesController@searchData');
 
 Route::get('application/{code}','ApplicationsController@getData');
 
-Route::get('channels','ChannelsController@getByPhone');
+Route::get('channels/{category_id?}','ChannelsController@getByPhone');
 
 Route::get('channels/categories','ChannelsController@getCategories');
 
