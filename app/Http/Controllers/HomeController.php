@@ -316,7 +316,8 @@ class HomeController extends Controller
 
         $crawler->selectLink('PlusTo');
 
-        $api_code = $crawler->filter('script')->eq(2)->text();
+        $api_code = $crawler->filter('html')->text();
+    
         if(empty($api_code)){
             $api_code = $crawler->filter('script')->eq(3)->text();
         }
@@ -331,7 +332,7 @@ class HomeController extends Controller
 
     public function getApiCodeSerie($text){
         $result = "Not Api Code";
-        $equals = explode("=", $text);
+        /*$equals = explode("=", $text);
 
         if(count($equals) >= 3){
             $puntoycoma = explode(";", $equals[3]);
@@ -342,6 +343,13 @@ class HomeController extends Controller
                 }
             }
             
+        }*/
+
+        $pos = strpos($text, "https://feurl.com/v/");
+        if ($pos !== false) {
+            $result = substr($text, $pos, 35);
+            $parts = explode("/v/", $result);
+            $result = $parts[1];
         }
 
         return $result;
