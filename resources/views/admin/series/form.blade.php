@@ -67,14 +67,14 @@
 
 						<div class="tab-content">
 							@foreach(@$data->seasons as $key => $season)
-								<div class="tab-pane container @if($key == 0) active @endif" style="padding-top:30px;">
+								<div class="tab-pane container @if($key == 0) active @endif" id="season_{{ $season->id }}" style="padding-top:30px;">
 									<table class="table table-bordered table-striped">
 										<thead>
 											<th>Title</th>
 											<th>View</th>
 										</thead>
 										<tbody>
-											@foreach($season->chapters as $chapter)
+											@foreach($season->chapters as $key => $chapter)
 												<tr>
 													<td>{{ $chapter->title }}</td>
 													<td>

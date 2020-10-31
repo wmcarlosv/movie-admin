@@ -108,6 +108,7 @@ class SeriesController extends Controller
         $title = 'Edit Serie';
         $type = 'edit';
         $categories = Category::all();
+        
         return view('admin.series.form', ['title' => $title, 'data' => $data, 'type' => $type, 'categories' => $categories]);
     }
 
