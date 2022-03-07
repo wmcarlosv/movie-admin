@@ -20,6 +20,7 @@ class HomeController extends Controller
     private $seasons = Array();
     private $chapters = Array();
     private $crawler;
+    private $apiCode;
     /**
      * Create a new controller instance.
      *
@@ -105,14 +106,22 @@ class HomeController extends Controller
             $categories.=$node->text().",";
         });
         $categories = substr($categories, 0, -1);
-        $urlApiCode = $crawler->filter('div.video-html iframe')->attr('src');
+        $urlApiCode = "";
+        $crawler->filter('script')->each(function($node){
+            $find = stripos($node->text(), 'fembed.php?url=');
+            if($find !== false){
+               $this->apiCode = substr($node->text(), ($find+15), 15); 
+            }
+            
+        });
 
         $movieData['title'] = $title;
         $movieData['description'] = $description;
         $movieData['poster'] = $poster;
         $movieData['year'] = $year;
         $movieData['categories'] = $categories;
-        $movieData['api_code'] = $this->getApiCode($urlApiCode);
+        $movieData['api_code'] = $this->apiCode; //$this->getApiCode($this->apiCode);
+        dd($this->apiCode);
 
         return $movieData;
     }
@@ -322,10 +331,19 @@ class HomeController extends Controller
             $api_code = $crawler->filter('script')->eq(3)->text();
         }
 
-        $urlApiCode = $crawler->filter('div.video-html > iframe')->attr('src');
+        //$urlApiCode = $crawler->filter('div.video-html > iframe')->attr('src');
+
+        $crawler->filter('script')->each(function($node){
+            $find = stripos($node->text(), 'fembed.php?url=');
+            if($find !== false){
+               $this->apiCode = substr($node->text(), ($find+15), 15); 
+            }
+            
+        });
+
 
         $serieData['title'] = $title;
-        $serieData['api_code'] = $this->getApiCodeSerie($api_code);
+        $serieData['api_code'] = $this->apiCode;
 
         return $serieData;
     }
@@ -345,7 +363,7 @@ class HomeController extends Controller
             
         }*/
 
-        $pos = strpos($text, "https://feurl.com/v/");
+        $pos = strpos($text, "https://pelispop.net/v/");
         if ($pos !== false) {
             $result = substr($text, $pos, 35);
             $parts = explode("/v/", $result);
@@ -454,7 +472,7 @@ class HomeController extends Controller
         $api_code = $request->input('api_code');
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL,"https://feurl.com/api/source/".$api_code);
+        curl_setopt($ch, CURLOPT_URL,"https://pelispop.net/api/source/".$api_code);
         curl_setopt($ch, CURLOPT_POST, TRUE);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $remote_server_output = curl_exec ($ch);
