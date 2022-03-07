@@ -121,7 +121,6 @@ class HomeController extends Controller
         $movieData['year'] = $year;
         $movieData['categories'] = $categories;
         $movieData['api_code'] = $this->apiCode; //$this->getApiCode($this->apiCode);
-        dd($this->apiCode);
 
         return $movieData;
     }
