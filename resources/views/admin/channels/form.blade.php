@@ -20,7 +20,7 @@
 		@endif
 		<div class="card card-success">
 			<div class="card-header">
-				<h3><i class="fas fa-tag"></i> {{ $title }}</h3>
+				<h3><i class="fas fa-tv"></i> {{ $title }}</h3>
 			</div>
 			@if($type == 'new')
 				{!! Form::open(['route' => 'channels.store', 'method' => 'POST', 'autocomplete' => 'off', 'files' => true]) !!}

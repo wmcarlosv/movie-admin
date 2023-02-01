@@ -64,11 +64,11 @@ class AppServiceProvider extends ServiceProvider
                             'text' => 'Movies',
                             'icon' => 'fas fa-ticket-alt',
                             'route' => 'movies.index'
-                        ],[
+                        ]/*,[
                             'text' => 'Import Movies',
                             'icon' => 'fas fa-file-import',
                             'route' => 'import_movies'
-                        ]
+                        ]*/
                     ]
                 ],[
                     'text' => 'Series Manage',
@@ -88,12 +88,12 @@ class AppServiceProvider extends ServiceProvider
                             'text' => 'Chapters',
                             'route' => 'chapters.index',
                             'icon' => 'fas fa-video'
-                        ],
+                        ]/*,
                         [
                             'text' => 'Import Series',
                             'route' => 'import_series',
                             'icon' => 'fas fa-file-import'
-                        ]
+                        ]*/
                     ]
                 ],[
                     'text' => 'Channels',
