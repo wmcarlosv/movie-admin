@@ -17,7 +17,7 @@
 
 @section('content')
    	<div class="row">
-		<div class="col-md-4">
+		<div class="col-md-3">
 			<div class="info-box">
 		    	<span class="info-box-icon bg-red"><i class="fas fa-tags"></i></span>
 		    	<div class="info-box-content">
@@ -26,7 +26,7 @@
 		    	</div>
 		    </div>
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-3">
 			<div class="info-box">
 		    	<span class="info-box-icon bg-blue"><i class="fas fa-ticket-alt"></i></span>
 		    	<div class="info-box-content">
@@ -35,12 +35,21 @@
 		    	</div>
 		    </div>
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-3">
 			<div class="info-box">
 		    	<span class="info-box-icon bg-green"><i class="fas fa-tv"></i></span>
 		    	<div class="info-box-content">
 		    		<span class="info-box-text">Series</span>
 		    		<span class="info-box-number">{{ $cser }}</span>
+		    	</div>
+		    </div>
+		</div>
+		<div class="col-md-3">
+			<div class="info-box">
+		    	<span class="info-box-icon bg-yellow"><i class="fas fa-tv"></i></span>
+		    	<div class="info-box-content">
+		    		<span class="info-box-text">Channels</span>
+		    		<span class="info-box-number">{{ $channels->count() }}</span>
 		    	</div>
 		    </div>
 		</div>

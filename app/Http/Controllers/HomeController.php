@@ -12,6 +12,7 @@ use Session;
 use App\Serie;
 use App\Season;
 use App\Chapter;
+use App\Channel;
 
 class HomeController extends Controller
 {
@@ -41,6 +42,7 @@ class HomeController extends Controller
         $categories = Category::all();
         $movies = Movie::where('status','=','A')->get();
         $series = Serie::all();
+        $channels = Channel::all();
         $q = (isset($_GET['q']) and !empty($_GET['q'])) ? $_GET['q']: '';
         if(isset($q) and !empty($q)){
             $movies_availables = Movie::where('status','=','A')->where(function($query) use ($q){
@@ -53,7 +55,7 @@ class HomeController extends Controller
         }
         
 
-        return view('admin.dashboard',['ccat'=>$categories->count(), 'cmov' => $movies->count(), 'cser' => $series->count(), 'movies_availables' => $movies_availables, 'q' => $q]);
+        return view('admin.dashboard',['ccat'=>$categories->count(), 'cmov' => $movies->count(), 'cser' => $series->count(), 'movies_availables' => $movies_availables, 'q' => $q, 'channels'=>$channels]);
     }
 
     public function importMovies(){
