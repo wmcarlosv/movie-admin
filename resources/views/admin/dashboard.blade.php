@@ -17,7 +17,7 @@
 
 @section('content')
    	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-12">
 			<div class="info-box">
 		    	<span class="info-box-icon bg-red"><i class="fas fa-tags"></i></span>
 		    	<div class="info-box-content">
@@ -26,7 +26,7 @@
 		    	</div>
 		    </div>
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-12">
 			<div class="info-box">
 		    	<span class="info-box-icon bg-blue"><i class="fas fa-ticket-alt"></i></span>
 		    	<div class="info-box-content">
@@ -35,7 +35,7 @@
 		    	</div>
 		    </div>
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-12">
 			<div class="info-box">
 		    	<span class="info-box-icon bg-green"><i class="fas fa-tv"></i></span>
 		    	<div class="info-box-content">
@@ -44,7 +44,7 @@
 		    	</div>
 		    </div>
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-12">
 			<div class="info-box">
 		    	<span class="info-box-icon bg-yellow"><i class="fas fa-tv"></i></span>
 		    	<div class="info-box-content">
@@ -54,7 +54,7 @@
 		    </div>
 		</div>
 	</div>
-	<div class="row">
+	<!--<div class="row">
 		<div class="col-md-12">
 			<div class="card card-success">
 				<div class="card-header">
@@ -117,7 +117,8 @@
 			</div>
 		</div>
 	</div>
-	<!--Modal-->
+	
+
 	<div class="modal" id="movie_details">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -142,7 +143,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>-->
 @stop
 @section('plugins.Datatables', true)
 @section('js')
