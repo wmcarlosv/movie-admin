@@ -41,10 +41,10 @@
 					<input type="text" readonly="readonly" name="role" class="form-control" value="{{ Auth::user()->role }}" />
 				</div>
 				@if(Auth::user()->role == 'admin')
-					<div class="form-group">
+					<!--<div class="form-group">
 						<label>Import Current Page: </label>
 						<input type="text" class="form-control" readonly="readonly" value="{{ $current_page }}" />
-					</div>
+					</div>-->
 				@endif
 			</div>
 			<div class="card-footer text-right">

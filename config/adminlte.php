@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Cinema Admin',
+    'title' => 'TV Admin',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>Cinema</b>Admin',
+    'logo' => '<b>TV</b>Admin',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,

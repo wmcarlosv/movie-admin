@@ -52,11 +52,11 @@ class AppServiceProvider extends ServiceProvider
                     'text' => 'Categories',
                     'icon' => 'fas fa-tags',
                     'route' => 'categories.index'
-                ],[
+                ]/*,[
                     'text' => 'Applications',
                     'icon' => 'fas fa-mobile-alt',
                     'route' => 'applications.index'
-                ],[
+                ]*/,[
                     'text' => 'Movies Manage',
                     'icon' => 'fas fa-list',
                     'submenu' => [
