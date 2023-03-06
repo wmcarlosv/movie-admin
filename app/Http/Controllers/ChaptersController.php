@@ -54,7 +54,7 @@ class ChaptersController extends Controller
         $chapter->season_id = $request->input('season_id');
         $chapter->title = $request->input('title');
         $chapter->position = $request->input('position');
-        $chapter->api_code = $request->input('api_code');
+        $chapter->direct_url = $request->input('api_code');
 
         if($chapter->save()){
             Session::flash('success','Record Inserted Successfully!!');
@@ -114,10 +114,7 @@ class ChaptersController extends Controller
         $chapter->season_id = $request->input('season_id');
         $chapter->title = $request->input('title');
         $chapter->position = $request->input('position');
-        $chapter->api_code = $request->input('api_code');
-
-        $chapter = Chapter::findorfail($id);
-        $chapter->name = $request->input('name');
+        $chapter->direct_url = $request->input('api_code');
 
         if($chapter->update()){
             Session::flash('success','Record Updated Successfully!!');

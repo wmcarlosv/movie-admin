@@ -57,8 +57,8 @@
 						<input type="text" name="position" class="form-control" value="{{ @$data->position }}" />
 					</div>
 					<div class="form-group">
-						<label>Api Code</label>
-						<input type="text" name="api_code" class="form-control" value="{{ @$data->api_code }}" />
+						<label>Url</label>
+						<input type="text" name="api_code" class="form-control" value="{{ @$data->direct_url }}" />
 					</div>
 				</div>
 				<div class="card-footer text-right">

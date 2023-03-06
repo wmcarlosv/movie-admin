@@ -57,13 +57,13 @@
 						@endif
 					</div>
 					<div class="form-group">
-						<label>Api Code:</label>
-						<input type="text" name="api_code" class="form-control" value="{{ @$data->api_code }}" />
+						<label>Url:</label>
+						<input type="text" name="api_code" class="form-control" value="{{ @$data->direct_url }}" />
 					</div>
 				</div>
 				<div class="card-footer text-right">
 					@if($type == 'edit')
-					<a class="btn btn-info test-movie" href="#" data-code="{{ @$data->api_code }}"><i class="fas fa-eye"></i></a>
+					<!--<a class="btn btn-info test-movie" href="#" data-code="{{ @$data->api_code }}"><i class="fas fa-eye"></i></a>-->
 					@endif
 					<button class="btn btn-success" type="submit"><i class="fas fa-save"></i> Save</button>
 					<a href="{{ route('movies.index') }}" class="btn btn-danger"><i class="fas fa-times"></i> Cancel</a>

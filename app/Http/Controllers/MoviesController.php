@@ -63,7 +63,7 @@ class MoviesController extends Controller
         $movie->title = $request->input('title');
         $movie->description = $request->input('description');
         $movie->year = $request->input('year');
-        $movie->api_code = $request->input('api_code');
+        $movie->direct_url = $request->input('api_code'); 
 
         if($request->hasFile('poster')){
             $movie->poster = explode('/',$request->poster->store('public/movies'))[2];
@@ -130,7 +130,7 @@ class MoviesController extends Controller
         $movie->title = $request->input('title');
         $movie->description = $request->input('description');
         $movie->year = $request->input('year');
-        $movie->api_code = $request->input('api_code');
+        $movie->direct_url = $request->input('api_code'); 
 
         if($request->has('poster')){
             Storage::delete('public/movies/'.$movie->poster);

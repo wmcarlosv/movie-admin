@@ -217,7 +217,7 @@ class SeriesController extends Controller
         $data['downloads'] = $serie->downloads;
 
         foreach ($seasons as $index => $obj) {
-            $ssn[$index] = ['title' => $obj->title, 'list' => Chapter::select('title','position','api_code')->where('season_id','=',$obj->id)->orderBy('position','ASC')->get()];
+            $ssn[$index] = ['title' => $obj->title, 'list' => Chapter::select('title','position','api_code','direct_url')->where('season_id','=',$obj->id)->orderBy('position','ASC')->get()];
         }
 
         $data['seasons'] = $ssn;
