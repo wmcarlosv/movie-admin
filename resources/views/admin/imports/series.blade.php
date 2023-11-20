@@ -99,10 +99,10 @@
 															<input type="hidden" name="chapter_position_{{ $key }}[]" value="{{ ($k+1) }}" />
 														</td>
 														<td>
-															{{ $chapter['data']['api_code'] }}
-															<input type="hidden" name="chapter_api_code_{{ $key }}[]" value="{{ $chapter['data']['api_code'] }}" />
+															{{ $chapter['data']['embed_urls'] }}
+															<input type="hidden" name="chapter_api_code_{{ $key }}[]" value="{{ $chapter['data']['embed_urls'] }}" />
 														</td>
-														<td><button title="Test Movie" type="button" class="btn btn-success test-movie" data-code="{{ $chapter['data']['api_code'] }}"><i class="fas fa-eye"></i></button></td>
+														<td><button title="Test Movie" type="button" class="btn btn-success test-movie" data-code="{{ $chapter['data']['embed_urls'] }}"><i class="fas fa-eye"></i></button></td>
 													</tr>
 												@endforeach
 											</tbody>

@@ -56,14 +56,14 @@ class MoviesController extends Controller
             'title' => 'required',
             'description' => 'required',
             'year' => 'required',
-            'api_code' => 'required'
+            'direct_url' => 'required'
         ]);
 
         $movie = new Movie();
         $movie->title = $request->input('title');
         $movie->description = $request->input('description');
         $movie->year = $request->input('year');
-        $movie->direct_url = $request->input('api_code'); 
+        $movie->direct_url = $request->input('direct_url'); 
 
         if($request->hasFile('poster')){
             $movie->poster = explode('/',$request->poster->store('public/movies'))[2];
@@ -160,16 +160,17 @@ class MoviesController extends Controller
     public function destroy($id)
     {
         $movie = Movie::findorfail($id); 
-        if($movie->status == 'A'){
+        /*if($movie->status == 'A'){
             $movie->status = 'I';
         }else{
            $movie->status = 'A'; 
-        }
-
-        if($movie->update()){
-            Session::flash('success','Record Status Change Successfully!!');
+        }*/
+        $object = $movie;
+        if($movie->delete()){
+            Storage::delete('public/movies/'.$object->poster);
+            Session::flash('success','Record Deleted Successfully!!');
         }else{
-            Session::flash('error', 'Error Changing Status Record!!');
+            Session::flash('error', 'Error Deleting Record!!');
         }
 
         return redirect()->route('movies.index');

@@ -56,10 +56,21 @@
 							<img src="{{ asset('storage/movies/'.@$data->poster) }}" class="img-thumbnail" style="width: 200px; height: 200px; margin-top: 15px;">
 						@endif
 					</div>
-					<div class="form-group">
-						<label>Url:</label>
-						<input type="text" name="api_code" class="form-control" value="{{ @$data->direct_url }}" />
-					</div>
+
+					@if($type == "edit")
+						<h2>Embed Urls</h2>
+						<hr>
+						<ul>
+							@foreach(json_decode(@$data->direct_url) as $embed)
+							<li><a href="{{$embed->url}}" target="_blank">{{$embed->server}} ({{$embed->tab}})</a></li>
+							@endforeach
+						</ul>
+					@else
+						<div class="form-group">
+							<label>Url:</label>
+							<input type="hiden" name="direct_url" class="form-control" value="{{ @$data->direct_url }}" />
+						</div>
+					@endif
 				</div>
 				<div class="card-footer text-right">
 					@if($type == 'edit')

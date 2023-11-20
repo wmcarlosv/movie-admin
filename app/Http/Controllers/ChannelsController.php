@@ -142,16 +142,16 @@ class ChannelsController extends Controller
     public function destroy($id)
     {
         $channel = Channel::findorfail($id); 
-        if($channel->status == 'A'){
+        /*if($channel->status == 'A'){
             $channel->status = 'I';
         }else{
            $channel->status = 'A'; 
-        }
-
-        if($channel->update()){
-            Session::flash('success','Record Status Change Successfully!!');
+        }*/
+        Storage::delete('public/channels/'.$channel->poster);
+        if($channel->delete()){
+            Session::flash('success','Record Deleted Successfully!!');
         }else{
-            Session::flash('error', 'Error Changing Status Record!!');
+            Session::flash('error', 'Error Deleting Record!!');
         }
 
         return redirect()->route('channels.index');

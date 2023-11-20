@@ -32,10 +32,10 @@
 						<label>Name:</label>
 						<input type="text" name="name" class="form-control" value="{{ @$data->name }}" />
 					</div>
-					<div class="form-check">
+					<!--<div class="form-check">
 					  <label class="form-check-label">
 					    <input type="checkbox" name="is_for_channel" @if(@$data->is_for_channel == 'Y') checked='checked' @endif class="form-check-input" value="Y">Is For Channel
-					  </label>
+					  </label>-->
 					</div>
 				</div>
 				<div class="card-footer text-right">

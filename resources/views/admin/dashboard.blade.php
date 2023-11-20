@@ -35,7 +35,7 @@
 		    	</div>
 		    </div>
 		</div>
-		<div class="col-md-12">
+		<!--<div class="col-md-12">
 			<div class="info-box">
 		    	<span class="info-box-icon bg-green"><i class="fas fa-tv"></i></span>
 		    	<div class="info-box-content">
@@ -52,7 +52,7 @@
 		    		<span class="info-box-number">{{ $channels->count() }}</span>
 		    	</div>
 		    </div>
-		</div>
+		</div>-->
 	</div>
 	<!--<div class="row">
 		<div class="col-md-12">

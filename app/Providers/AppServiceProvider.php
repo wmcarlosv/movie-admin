@@ -52,11 +52,11 @@ class AppServiceProvider extends ServiceProvider
                     'text' => 'Categories',
                     'icon' => 'fas fa-tags',
                     'route' => 'categories.index'
-                ]/*,[
+                ],/*[
                     'text' => 'Applications',
                     'icon' => 'fas fa-mobile-alt',
                     'route' => 'applications.index'
-                ]*/,[
+                ],*/[
                     'text' => 'Movies Manage',
                     'icon' => 'fas fa-list',
                     'submenu' => [
@@ -64,13 +64,13 @@ class AppServiceProvider extends ServiceProvider
                             'text' => 'Movies',
                             'icon' => 'fas fa-ticket-alt',
                             'route' => 'movies.index'
-                        ]/*,[
+                        ],[
                             'text' => 'Import Movies',
                             'icon' => 'fas fa-file-import',
                             'route' => 'import_movies'
-                        ]*/
+                        ]
                     ]
-                ],[
+                ],/*[
                     'text' => 'Series Manage',
                     'icon' => 'fas fa-list',
                     'submenu' => [
@@ -88,18 +88,18 @@ class AppServiceProvider extends ServiceProvider
                             'text' => 'Chapters',
                             'route' => 'chapters.index',
                             'icon' => 'fas fa-video'
-                        ]/*,
+                        ],
                         [
                             'text' => 'Import Series',
                             'route' => 'import_series',
                             'icon' => 'fas fa-file-import'
-                        ]*/
+                        ]
                     ]
                 ],[
                     'text' => 'Channels',
                     'icon' => 'fas fa-tv',
                     'route' => 'channels.index'
-                ]);
+                ]*/);
 
             }
 

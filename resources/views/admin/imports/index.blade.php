@@ -29,7 +29,7 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="input-group">
-									<input type="text" name="url" value="{{ $q }}" placeholder="Url For Search Movie, This Format ==> https://pelisplushd.net/peliculas?page=" class="form-control">
+									<input type="text" name="url" value="{{ $q }}" placeholder="Url For Search Movie" class="form-control">
 									<div class="input-group-append">
 										<button type="submit" id="search-movies" class="btn btn-success"><i class="fas fa-search"></i></button>
 									</div>
@@ -60,8 +60,7 @@
 								<th>Year</th>
 								<th>Poster</th>
 								<th>Categories</th>
-								<th>Code Api</th>
-								<th>-</th>
+								<th>Embed Urls</th>
 							</thead>
 							<tbody>
 								{!! Form::open(['route' => 'save_movies', 'method' => 'POST', 'id' => 'form_movies']) !!}
@@ -77,8 +76,15 @@
 											<img src="{{ $imovie['poster'] }}" style="width: 100px; height: 100px" />
 										</td>
 										<td><input type="hidden" name="categories[]" value="{{ $imovie['categories'] }}"/>{{ $imovie['categories'] }}</td>
-										<td><input type="hidden" name="api_codes[]" value="{{ $imovie['api_code'] }}"/>{{ $imovie['api_code'] }}</td>
-										<td><button title="Test Movie" type="button" class="btn btn-success test-movie" data-code="{{ $imovie['api_code'] }}"><i class="fas fa-eye"></i></button></td>
+										<td><input type="hidden" name="embed_url[]" value="{{ $imovie['embed_urls'] }}"/>
+											<ul>
+												@foreach(json_decode($imovie['embed_urls']) as $url)
+													<li><a href="{{$url->url}}" target="_blank">{{$url->server}} ({{$url->tab}})</a></li>
+												@endforeach
+											</ul>
+										</td>
+										<!--<td><button title="Test Movie" type="button" class="btn btn-success test-movie" data-code="{{ $imovie['embed_urls'] }}"><i class="fas fa-eye"></i></button></td>-->
+										<td></td>
 									</tr>
 								@endforeach
 								{!! Form::close() !!}

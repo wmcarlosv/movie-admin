@@ -22,6 +22,8 @@ class HomeController extends Controller
     private $chapters = Array();
     private $crawler;
     private $apiCode;
+    private $baseUrl = "";
+    private $baseUrlSerie = "";
     /**
      * Create a new controller instance.
      *
@@ -29,7 +31,8 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        
+        $this->baseUrl = env("URL_SEARCH");
+        $this->baseUrlSerie = "https://www17.pelisplushd.to/";
     }
 
     /**
@@ -80,7 +83,7 @@ class HomeController extends Controller
         $crawler = $client->request('GET', $url);
         if(empty($search_type)){
             $crawler->filter('a.Posters-link')->each(function($node){
-                $dataArray = $this->getIndividualMovieInfo($node->attr('href'));
+                $dataArray = $this->getIndividualMovieInfo($this->baseUrl.$node->attr('href'));
                 array_push($this->movieData, $dataArray);
             });
         }else{
@@ -92,21 +95,32 @@ class HomeController extends Controller
 
     public function getIndividualMovieInfo($url){
 
-        global $categories;
+        global $categories, $embed_urls, $cont;
         $categories = "";
+        $cont = 0;
         $movieData = Array();
+        $embed_urls = Array();
 
         $client = new Client(); 
         $crawler = $client->request('GET', $url);
-
         $title = $crawler->filter('div.card h1.m-b-5')->text();
         $description = $crawler->filter('div.card div.text-large')->text();
         $poster = $crawler->filter('div.card img')->attr('src');
         $year = $crawler->filter('div.card span.text-semibold')->text();
+
         $crawler->filter('div.card a[href^="/generos/"]')->each(function($node){
             global $categories;
             $categories.=$node->text().",";
         });
+
+        $crawler->filter('ul.TbVideoNv li')->each(function($node){
+            global $embed_urls, $cont;
+            $embed_urls[$cont]['url'] = $node->attr("data-url");
+            $embed_urls[$cont]['tab'] = $node->attr("data-name");
+            $embed_urls[$cont]['server'] = $node->text();
+            $cont++;
+        });
+
         $categories = substr($categories, 0, -1);
         $urlApiCode = "";
         $crawler->filter('script')->each(function($node){
@@ -119,21 +133,12 @@ class HomeController extends Controller
 
         $movieData['title'] = $title;
         $movieData['description'] = $description;
-        $movieData['poster'] = $poster;
+        $movieData['poster'] = $this->baseUrl.$poster;
         $movieData['year'] = $year;
         $movieData['categories'] = $categories;
-        $movieData['api_code'] = $this->apiCode; //$this->getApiCode($this->apiCode);
+        $movieData['embed_urls'] = json_encode($embed_urls);
 
         return $movieData;
-    }
-
-    public function getApiCode($url){
-        $parts = explode("/v/", $url);
-        $output = 'Not Api Code';
-        if(count($parts) == 2){
-            $output = $parts[1];
-        }
-        return $output;
     }
 
     public function saveMovies(Request $request){
@@ -145,7 +150,7 @@ class HomeController extends Controller
         $years = $request->input('years');
         $posters = $request->input('posters');
         $categories = $request->input('categories');
-        $api_codes = $request->input('api_codes');
+        $embed_url = $request->input('embed_url');
 
         DB::beginTransaction();
 
@@ -169,7 +174,7 @@ class HomeController extends Controller
                 $movie->poster = $imgName.".".$imgExtension;
 
                 $movie->year = $years[$i];
-                $movie->api_code = $api_codes[$i];
+                $movie->direct_url = $embed_url[$i];
 
 
                 if(!$movie->save()){
@@ -202,7 +207,7 @@ class HomeController extends Controller
                 $movie->poster = $imgName.".".$imgExtension;
 
                 $movie->year = $years[$i];
-                $movie->api_code = $api_codes[$i];
+                $movie->direct_url = $embed_url[$i];
 
 
                 if(!$movie->update()){
@@ -283,7 +288,6 @@ class HomeController extends Controller
 
         $client = new Client(); 
         $this->crawler = $client->request('GET', $url);
-
         $title = $this->crawler->filter('div.card h1.m-b-5')->text();
         $description = $this->crawler->filter('div.card div.text-large')->text();
         $poster = $this->crawler->filter('div.card img')->attr('src');
@@ -307,7 +311,7 @@ class HomeController extends Controller
 
         $serieData['title'] = $title;
         $serieData['description'] = $description;
-        $serieData['poster'] = $poster;
+        $serieData['poster'] = $this->baseUrlSerie.$poster;
         $serieData['year'] = $year;
         $serieData['categories'] = $this->categories;
         $serieData['seasons'] = $this->seasons;
@@ -316,62 +320,47 @@ class HomeController extends Controller
     }
 
     public function getDataSerie($url){
-
+        global $embed_urls, $cont;
+        $embed_urls = Array();
+        $cont = 0;
         $serieData = Array();
+        $url = $this->baseUrlSerie.$url;
 
         $client = new Client(); 
         $crawler = $client->request('GET', $url);
 
         $title = $crawler->filter('div.card h1.m-b-5')->text();
 
-        $crawler->selectLink('PlusTo');
+        $crawler->filter('ul.TbVideoNv li')->each(function($node){
+            global $embed_urls, $cont;
+            $embed_urls[$cont]['url'] = $node->attr("data-url");
+            $embed_urls[$cont]['tab'] = $node->attr("data-name");
+            $embed_urls[$cont]['server'] = $node->text();
+            $cont++;
+        });
 
-        $api_code = $crawler->filter('html')->text();
+        /*$crawler->selectLink('PlusTo');*/
+
+        /*$api_code = $crawler->filter('html')->text();
     
         if(empty($api_code)){
             $api_code = $crawler->filter('script')->eq(3)->text();
-        }
+        }*/
 
         //$urlApiCode = $crawler->filter('div.video-html > iframe')->attr('src');
 
-        $crawler->filter('script')->each(function($node){
+        /*$crawler->filter('script')->each(function($node){
             $find = stripos($node->text(), 'fembed.php?url=');
             if($find !== false){
                $this->apiCode = substr($node->text(), ($find+15), 15); 
             }
             
-        });
-
+        });*/
 
         $serieData['title'] = $title;
-        $serieData['api_code'] = $this->apiCode;
+        $serieData['embed_urls'] = json_encode($embed_urls);
 
         return $serieData;
-    }
-
-    public function getApiCodeSerie($text){
-        $result = "Not Api Code";
-        /*$equals = explode("=", $text);
-
-        if(count($equals) >= 3){
-            $puntoycoma = explode(";", $equals[3]);
-            if(count($puntoycoma) > 0){
-                $coma = explode("'", $puntoycoma[0]);
-                if(count($coma) > 0){
-                    $result = $this->getApiCode($coma[1]);
-                }
-            }
-            
-        }*/
-
-        $pos = strpos($text, "https://pelispop.net/v/");
-        if ($pos !== false) {
-            $result = substr($text, $pos, 35);
-            $parts = explode("/v/", $result);
-            $result = $parts[1];
-        }
-
-        return $result;
     }
 
     public function saveSeries(Request $request){
